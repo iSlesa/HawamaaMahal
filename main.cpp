@@ -89,7 +89,7 @@ int main()
     SDL_Surface *screen = SDL_GetWindowSurface(win);
     Vector Camera(0,0,-70);
     g_framebuffer = (unsigned int*)screen->pixels;
-    zBuffer = new float [g_width*g_height]();
+   // zBuffer = new float [g_width*g_height];
     g_width = screen->w;
     g_height = screen->h;
     zBufferRst();
@@ -126,7 +126,7 @@ int main()
         }
 
         Clear();
-        zBufferRst();
+        //zBufferRst();
         SDL_LockSurface(screen);
 
         Render(Camera);

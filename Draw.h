@@ -55,7 +55,7 @@ void PutPixel(Vertex v, unsigned char r, unsigned char g, unsigned char b)
 void zBufferRst()
     {
             delete[] zBuffer;
-            zBuffer = new float [g_width*g_height]();
+            zBuffer = new float [g_width*g_height];
     }
 
 class Line{
@@ -431,6 +431,8 @@ class Triangle{
 
 // Clear all pixels with white color
 void Clear(){
+delete[] zBuffer;
+    zBuffer = new float [g_width*g_height];
     for (int i = 0; i < g_width; ++i){
         for (int j = 0; j < g_height; ++j){
             if (j > g_height || i > g_width || i<0 || j<0) return;
@@ -440,6 +442,7 @@ void Clear(){
     unsigned int color = (c << 24) | (r << 16) | (g << 8) | b;
 
     g_framebuffer[j*g_width + i] = color;
+    zBuffer[g_height*i +j] =1.0f;
         }
     }
 }
