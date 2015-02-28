@@ -28,12 +28,13 @@ class Vector{
     float& operator [] (int i){return (&x)[i];}
 };
 class point{
-    public: float x,y;
+    public: float x,y,z; //z for depth
     public: point(){}
-            point(float xx, float yy): x(xx),y(yy){}
-            point(const point& in):x(in.x),y(in.y){}
+            point(float xx, float yy, float zz): x(xx),y(yy),z(zz){}
+            point(const point& in):x(in.x),y(in.y),z(in.z){}
             void operator = (const point& in){
                 x = in.x;
                 y = in.y;
+                z = in.z;
             }
 };

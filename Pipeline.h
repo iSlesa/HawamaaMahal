@@ -53,7 +53,7 @@ point WorldToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,
     point SS;
     SS.x = (r.x*0.5f+0.5f)*width;
     SS.y = (r.y*0.5f+0.5f)*height;
-
+    SS.z = r.z;
     return SS;
 
 }

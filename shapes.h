@@ -34,7 +34,7 @@ class cube: public shapes{
             Vertex v[8];
             for(int i=0;i<8;i++)
             {
-                v[i] = Vertex(_2d[i].x,_2d[i].y);
+                v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
             }
             Line e0(v[0],v[1]);
             Line e2(v[1],v[2]);
@@ -89,7 +89,7 @@ class pyramid : public shapes{
             Vertex v[5];
             for(int i=0;i<5;i++)
             {
-                v[i] = Vertex(_2d[i].x,_2d[i].y);
+                v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
             }
             Line e0(v[1],v[2]);
             Line e1(v[2],v[3]);
@@ -137,7 +137,7 @@ class flag: public shapes{
         Vertex v[5];
         for(int i=0;i<5;i++)
         {
-            v[i] = Vertex(_2d[i].x,_2d[i].y);
+            v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
         }
         Line e0(v[0],v[1]);
         Line e1(v[3],v[4]);

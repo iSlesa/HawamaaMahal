@@ -77,56 +77,127 @@ class Line{
         Line(Vertex AA,Vertex BB):v1(AA),v2(BB){}
 
         void DrawLine(int r,int g,int b){
-            int x1=v1.x;
-            int x2=v2.x;
-            int y1=v1.y;
-            int y2=v2.y;
-            int dx=abs(x2-x1);
-   	        int dy=abs(y2-y1);
-   	        int x_inc=1;
-   	        int y_inc=1;
-   	        if((x2-x1)!=0){
-   	    	    x_inc=(x2-x1)/dx;
-   	        }
-   	        if((y2-y1)!=0){
-   		        y_inc=(y2-y1)/dy;
-   	        }
-   	        Vertex P(x1,y1);
-   	        PutPixel(P,r,g,b);
-   	        if(dx<dy){
-   		        int p=2*dx-dy;
-   		        int k=0;
-   		        while(k!=dy){
-   			        if(p<0){
-   				        P.increase_y(y_inc);
-   				        p=p+2*dx;
-   			        }
-   			        else{
-   				        P.increase_x(x_inc);
-                        P.increase_y(y_inc);
-   				        p=p+2*dx-2*dy;
-   			        }
-   			        k++;
-   			        PutPixel(P,r,g,b);
-   		        }
-   	        }
-   	        else{
-   		        int p=2*dy-dx;
-   		        int k=0;
-   		        while(k!=dx){
-   			        if(p<0){
-   				        P.increase_x(x_inc);
-   				        p=p+2*dy;
-   			        }
-   			        else{
-   				        P.increase_x(x_inc);
-   				        P.increase_y(y_inc);
-   				        p=p+2*dy-2*dx;
-   			        }
-   			        k++;
-   			        PutPixel(P,r,g,b);
-   		        }
-   	        }
+//            int x1=v1.x;
+//            int x2=v2.x;
+//            int y1=v1.y;
+//            int y2=v2.y;
+//            int dx=abs(x2-x1);
+//   	        int dy=abs(y2-y1);
+//   	        int x_inc=1;
+//   	        int y_inc=1;
+//   	        if((x2-x1)!=0){
+//   	    	    x_inc=(x2-x1)/dx;
+//   	        }
+//   	        if((y2-y1)!=0){
+//   		        y_inc=(y2-y1)/dy;
+//   	        }
+//   	        Vertex P(x1,y1);
+//   	        PutPixel(P,r,g,b);
+//   	        if(dx<dy){
+//   		        int p=2*dx-dy;
+//   		        int k=0;
+//   		        while(k!=dy){
+//   			        if(p<0){
+//   				        P.increase_y(y_inc);
+//   				        p=p+2*dx;
+//   			        }
+//   			        else{
+//   				        P.increase_x(x_inc);
+//                        P.increase_y(y_inc);
+//   				        p=p+2*dx-2*dy;
+//   			        }
+//   			        k++;
+//   			        PutPixel(P,r,g,b);
+//   		        }
+//   	        }
+//   	        else{
+//   		        int p=2*dy-dx;
+//   		        int k=0;
+//   		        while(k!=dx){
+//   			        if(p<0){
+//   				        P.increase_x(x_inc);
+//   				        p=p+2*dy;
+//   			        }
+//   			        else{
+//   				        P.increase_x(x_inc);
+//   				        P.increase_y(y_inc);
+//   				        p=p+2*dy-2*dx;
+//   			        }
+//   			        k++;
+//   			        PutPixel(P,r,g,b);
+//   		        }
+//   	        }
+    int x1 = v1.x; int y1 = v1.y;
+    int x2 = v2.x; int y2 = v2.y;
+    float dStart = v1.z, dEnd = v2.z;// Starting depth value, and ending depth values
+    float dVal = dStart, delta_d = dStart - dEnd; // The depth value of that point, and the difference delta_d
+
+//
+//    if (x1 <= 0) x1 = 1;
+//    if (x1 >= screen->w) x1 = screen->w -1;
+//    if (y1 <= 0) y1 = 1;
+//    if (y1 >= screen->h) y1 = screen->h -1;
+//
+//    if (x2 <= 0) x2 = 1;
+//    if (x2 >= screen->w) x2 = screen->w -1 ;
+//    if (y2 <= 0) y2 = 1;
+//    if (y2 >= screen->h) y2 = screen->h -1;
+
+
+    int delta_x(x2 - x1);
+    // if x1 == x2, then it does not matter what we set here
+    signed char const ix((delta_x > 0) - (delta_x < 0));
+    delta_x = abs(delta_x) << 1;
+
+    int delta_y(y2 - y1);
+    // if y1 == y2, then it does not matter what we set here
+    signed char const iy((delta_y > 0) - (delta_y < 0));
+    delta_y = abs(delta_y) << 1;
+    Vertex P(x1,y1,dVal);
+    PutPixel(P,r,g,b);
+
+    if (delta_x >= delta_y)
+    {
+        // error may go below zero
+        int error(delta_y - (delta_x >> 1));
+        float id = delta_d / (float) delta_x;
+        while (x1 != x2)
+        {
+            if ((error >= 0) && (error || (ix > 0)))
+            {
+                error -= delta_x;
+                y1 += iy;
+            }
+            // else do nothing
+
+            error += delta_y;
+            x1 += ix;
+            dVal += id;
+            Vertex P(x1,y1,dVal);
+            PutPixel(P,r,g,b);
+        }
+    }
+    else
+    {
+        // error may go below zero
+        int error(delta_x - (delta_y >> 1));
+        float id = delta_d / (float) delta_y;
+        while (y1 != y2)
+        {
+            if ((error >= 0) && (error || (iy > 0)))
+            {
+                error -= delta_y;
+                x1 += ix;
+            }
+            // else do nothing
+
+            error += delta_x;
+            y1 += iy;
+            dVal += id;
+            Vertex P(x1,y1,dVal);
+            PutPixel(P,r,g,b);
+        }
+    }
         }
 };
 class Triangle{
@@ -362,18 +433,13 @@ class Triangle{
 void Clear(){
     for (int i = 0; i < g_width; ++i){
         for (int j = 0; j < g_height; ++j){
-            Vertex a(i,j);
-
-            if (a.y > g_height || a.x > g_width || a.x<0 || a.y<0) return;
+            if (j > g_height || i > g_width || i<0 || j<0) return;
 
     unsigned char c = 255;
     int r=255, g=255, b=255;
-    // Create the color for given rgb values: the format for integer in hex is aarrggbb
-    // e.g. for white all r,g,b are FFH: FFFFFFFF
-    //      for balck, all are 00H:  FF000000
     unsigned int color = (c << 24) | (r << 16) | (g << 8) | b;
 
-    g_framebuffer[a.y*g_width + a.x] = color;
+    g_framebuffer[j*g_width + i] = color;
         }
     }
 }
