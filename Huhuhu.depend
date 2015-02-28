@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1425042503 source:/home/slesa/Huhuhu/Matrix.cpp
+	"Matrix.h"
+	"Vector.h"
+	<math.h>
+
+1425042463 /home/slesa/Huhuhu/Matrix.h
+
+1425042563 /home/slesa/Huhuhu/Vector.h
+	<math.h>
+	"Matrix.h"
+
+1425100287 source:/home/slesa/Huhuhu/main.cpp
+	<SDL2/SDL.h>
+	<iostream>
+	<math.h>
+	"Draw.h"
+	"Pipeline.h"
+	"shapes.h"
+
+1425100782 /home/slesa/Huhuhu/Draw.h
+
+1425042846 /home/slesa/Huhuhu/Pipeline.h
+	"Matrix.h"
+	"Vector.h"
+
+1425045769 /home/slesa/Huhuhu/shapes.h
+
