@@ -6,11 +6,11 @@
 
 1425042463 /home/slesa/Huhuhu/Matrix.h
 
-1425102505 /home/slesa/Huhuhu/Vector.h
+1425268810 /home/slesa/Huhuhu/Vector.h
 	<math.h>
 	"Matrix.h"
 
-1425103270 source:/home/slesa/Huhuhu/main.cpp
+1425529492 source:/home/slesa/Huhuhu/main.cpp
 	<SDL2/SDL.h>
 	<iostream>
 	<math.h>
@@ -18,11 +18,15 @@
 	"Pipeline.h"
 	"shapes.h"
 
-1425103607 /home/slesa/Huhuhu/Draw.h
+1425446304 /home/slesa/Huhuhu/Draw.h
+	"Pipeline.h"
+	"Vector.h"
+	<algorithm>
+	<iostream>
 
-1425102482 /home/slesa/Huhuhu/Pipeline.h
+1425445693 /home/slesa/Huhuhu/Pipeline.h
 	"Matrix.h"
 	"Vector.h"
 
-1425102629 /home/slesa/Huhuhu/shapes.h
+1425446462 /home/slesa/Huhuhu/shapes.h
 

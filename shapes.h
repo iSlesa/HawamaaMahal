@@ -36,6 +36,9 @@ class cube: public shapes{
             {
                 v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
             }
+
+            Triangle T(v[0],v[1],v[2]);
+
             Line e0(v[0],v[1]);
             Line e2(v[1],v[2]);
             Line e3(v[2],v[3]);
@@ -49,18 +52,45 @@ class cube: public shapes{
             Line e11(v[2],v[6]);
             Line e12(v[3],v[7]);
 
-            e0.DrawLine(16,0,31);
-            e2.DrawLine(161,0,131);
-            e3.DrawLine(16,0,31);
-            e4.DrawLine(16,0,31);
-            e5.DrawLine(16,0,31);
-            e6.DrawLine(126,0,31);
-            e7.DrawLine(16,0,31);
-            e8.DrawLine(1,0,31);
-            e9.DrawLine(16,110,31);
-            e10.DrawLine(16,0,31);
-            e11.DrawLine(16,140,31);
-            e12.DrawLine(16,1,31);
+//            e0.DrawLine(16,0,31);
+//            e2.DrawLine(161,0,131);
+//            e3.DrawLine(16,0,31);
+//            e4.DrawLine(16,0,31);
+//            e5.DrawLine(16,0,31);
+//            e6.DrawLine(126,0,31);
+//            e7.DrawLine(16,0,31);
+//            e8.DrawLine(1,0,31);
+//            e9.DrawLine(16,110,31);
+//            e10.DrawLine(16,0,31);
+//            e11.DrawLine(16,140,31);
+//            e12.DrawLine(16,1,31);
+
+//            DrawTriangle(v[0],v[1],v[2],g_width,g_height,16,0,161);
+
+            Triangle T1(v[0],v[1],v[2]);
+            Triangle T2(v[0],v[3],v[2]);
+            Triangle T3(v[4],v[5],v[6]);
+            Triangle T4(v[4],v[7],v[6]);
+            Triangle T5(v[5],v[1],v[2]);
+            Triangle T6(v[5],v[6],v[2]);
+            Triangle T7(v[4],v[0],v[3]);
+            Triangle T8(v[4],v[7],v[3]);
+            Triangle T9(v[7],v[6],v[2]);
+            Triangle T10(v[7],v[3],v[2]);
+            Triangle T11(v[5],v[0],v[4]);
+            Triangle T12(v[5],v[0],v[1]);
+            T1.DrawTriangle(1,2,3);
+            T2.DrawTriangle(1,2,3);
+            T3.DrawTriangle(205,	193,	197);
+            T4.DrawTriangle(205,	193,	197);
+            T5.DrawTriangle(43,132,123);
+            T6.DrawTriangle(43,132,123);
+//            T7.DrawTriangle(18,232,123);
+//            T8.DrawTriangle(18,232,123);
+            T9.DrawTriangle(43,132,123);
+            T10.DrawTriangle(43,132,123);
+            T11.DrawTriangle(18,232,123);
+            T12.DrawTriangle(18,232,123);
         }
         ~cube()
         {
@@ -100,14 +130,32 @@ class pyramid : public shapes{
             Line e6(v[0],v[3]);
             Line e7(v[0],v[4]);
 
-            e0.DrawLine(16,0,31);
-            e1.DrawLine(161,0,131);
-            e2.DrawLine(16,0,31);
-            e3.DrawLine(16,0,31);
-            e4.DrawLine(16,0,31);
-            e5.DrawLine(126,0,31);
-            e6.DrawLine(16,0,31);
-            e7.DrawLine(1,0,31);
+//            e0.DrawLine(16,0,31);
+//            e1.DrawLine(161,0,131);
+//            e2.DrawLine(16,0,31);
+//            e3.DrawLine(16,0,31);
+//            e4.DrawLine(16,0,31);
+//            e5.DrawLine(126,0,31);
+//            e6.DrawLine(16,0,31);
+//            e7.DrawLine(1,0,31);
+
+            Triangle T1(v[0],v[2],v[3]);
+            Triangle T2(v[0],v[4],v[3]);
+            Triangle T3(v[0],v[1],v[4]);
+            Triangle T4(v[0],v[1],v[2]);
+//            Triangle T5(v[1],v[2],v[3]);
+//            Triangle T6(v[1],v[4],v[3]);
+//            Triangle T7(v[4],v[0],v[3]);
+//            Triangle T8(v[4],v[7],v[3]);
+            T1.DrawTriangle(232,223,1);
+            T2.DrawTriangle(232,223,1);
+            T3.DrawTriangle(18,232,123);
+            T4.DrawTriangle(18,232,123);
+//            T5.DrawTriangle(18,232,123);
+//            T6.DrawTriangle(18,232,123);
+//            T7.DrawTriangle(18,232,123);
+//            T8.DrawTriangle(18,232,123);
+
 
         }
         ~pyramid()
@@ -146,6 +194,8 @@ class flag: public shapes{
         e0.DrawLine(16,0,31);
         e1.DrawLine(161,0,131);
         e2.DrawLine(16,0,31);
+//
+//      DrawTriangle(v[0],v[1],v[2],g_width,g_height,16,0,161,zBuffer);
     }
     ~flag()
         {

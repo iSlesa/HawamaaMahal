@@ -2,18 +2,18 @@
 #include "Matrix.h"
 #include "Vector.h"
 
-point WorldToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,float near, float far, float width, float height){
+Vector WorldToView(const Vector World,const Vector& Camera,const Vector& LookTo,float near, float far, float width, float height){
     Matrix WtoC(4,4);
 
-    float ar = width/height;
+//    float ar = width/height;
+//
+//    float d = 1.0f/(far - near);
 
-    float d = 1.0f/(far - near);
-
-    Matrix CToS(4,4);
-    CToS(0,0) = 1/ar;    CToS(0,1) = 0;      CToS(0,2) = 0;    CToS(0,3) = 0;
-    CToS(1,0) = 0;    CToS(1,1) = 1;      CToS(1,2) = 0;    CToS(1,3) = 0;
-    CToS(2,0) = 0;    CToS(2,1) = 0;      CToS(2,2) = -(far+near)*d;    CToS(2,3) = -(2*far*near)*d;
-    CToS(3,0) = 0;    CToS(3,1) = 0;      CToS(3,2) = -1;    CToS(3,3) = 0;
+//    Matrix CToS(4,4);
+//    CToS(0,0) = 1/ar;    CToS(0,1) = 0;      CToS(0,2) = 0;    CToS(0,3) = 0;
+//    CToS(1,0) = 0;    CToS(1,1) = 1;      CToS(1,2) = 0;    CToS(1,3) = 0;
+//    CToS(2,0) = 0;    CToS(2,1) = 0;      CToS(2,2) = -(far+near)*d;    CToS(2,3) = -(2*far*near)*d;
+//    CToS(3,0) = 0;    CToS(3,1) = 0;      CToS(3,2) = -1;    CToS(3,3) = 0;
 
 
     Vector u,n,v(0,1,0);
@@ -48,12 +48,41 @@ point WorldToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,
     S(3) = 1;
 
     S = WtoC*S;
+    Vector view(S);
+    return view;
+//    S = CToS * S;
+//    Vector r(S);
+//    point SS;
+//    SS.x = (r.x*0.5f+0.5f)*width;
+//    SS.y = (r.y*0.5f+0.5f)*height;
+//    SS.z = r.z;
+//    return SS;
+
+}
+point ViewToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,float near, float far, float width, float height)
+{
+    float ar = width/height;
+    float d = 1.0f/(far - near);
+    Matrix CToS(4,4);
+    CToS(0,0) = 1/ar;    CToS(0,1) = 0;      CToS(0,2) = 0;    CToS(0,3) = 0;
+    CToS(1,0) = 0;    CToS(1,1) = 1;      CToS(1,2) = 0;    CToS(1,3) = 0;
+    CToS(2,0) = 0;    CToS(2,1) = 0;      CToS(2,2) = -(far+near)*d;    CToS(2,3) = -(2*far*near)*d;
+    CToS(3,0) = 0;    CToS(3,1) = 0;      CToS(3,2) = -1;    CToS(3,3) = 0;
+    Matrix S(4,1);
+    S = S.retMat(World);
     S = CToS * S;
     Vector r(S);
     point SS;
     SS.x = (r.x*0.5f+0.5f)*width;
     SS.y = (r.y*0.5f+0.5f)*height;
-    SS.z = r.z;
+    SS.z = World.z;
+   // std::cout<<SS.z<<std::endl;
     return SS;
 
+}
+point WorldToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,float near, float far, float width, float height)
+{
+    Vector x;
+    x = WorldToView(World,Camera,LookTo,near,far,width,height);
+    return ViewToPixel(x,Camera,LookTo,near,far,width,height);
 }

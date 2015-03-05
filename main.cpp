@@ -79,20 +79,26 @@ void Render(Vector Camera)
     side4.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     main.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     f.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+
+//    cube hawa(Vector(20,20,12),23,23,23);
+//    hawa.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+
+//    Triangle T(1,23,12,12,23,432);
+//    T.DrawTriangle(16,0,331);
 }
 
 int main()
 {
+    // point a(1,2,3),b(4,5,6),c(2,0,1);
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_Window *win = SDL_CreateWindow("Teskaaaa Baaaaaaajey!", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Surface *screen = SDL_GetWindowSurface(win);
-    Vector Camera(0,0,-70);
+    Vector Camera(0,0,-30);
     g_framebuffer = (unsigned int*)screen->pixels;
-   // zBuffer = new float [g_width*g_height];
     g_width = screen->w;
     g_height = screen->h;
-    zBufferRst();
     SDL_Event e;
     bool quit = false;
     while (!quit)
@@ -130,6 +136,7 @@ int main()
         SDL_LockSurface(screen);
 
         Render(Camera);
+        //DrawTriangle(a,b,c);
 
         SDL_UnlockSurface(screen);
 
