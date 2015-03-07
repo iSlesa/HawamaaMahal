@@ -63,6 +63,7 @@ void Render(Vector Camera)
 //    e10.DrawLine(16,0,31);
 //    e11.DrawLine(16,140,31);
 //    e12.DrawLine(16,1,31);
+
     cube base(Vector(0,0,0),100,-100,5);
     cube side1(Vector(0,50,5),5,5,50);
     cube side2(Vector(0,50,50+50),5,5,50);
@@ -79,6 +80,15 @@ void Render(Vector Camera)
     side4.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     main.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     f.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+
+    sphere golo1(Vector(2.5,57.5,2.5),5);
+    sphere golo2(Vector(2.5,57.5,97.5),5);
+    sphere golo3(Vector(97.5,57.5,97.5),5);
+    sphere golo4(Vector(97.5,57.5,2.5),5);
+    golo1.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    golo2.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    golo3.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    golo4.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
 
 //    cube hawa(Vector(20,20,12),23,23,23);
 //    hawa.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);

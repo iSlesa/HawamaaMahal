@@ -14,6 +14,11 @@ class Vector{
     Vector operator - (const Vector& vec) const {return Vector(x-vec.x,y-vec.y,z-vec.z);}
     Vector operator / (const float& d) const {return Vector(x/d,y/d,z/d);}
     Vector operator * (const float& d) const {return Vector(x*d,y*d,z*d);}
+    void operator = (const Vector& in) {
+                x=in.x;
+                y=in.y;
+                z=in.z;
+            }
     Vector crossProduct(const Vector& v) const {return Vector(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);}
     float dotProduct (const Vector& v) const {return x * v.x + y * v.y + z * v.z;}
     float norm() const {return x*x + y*y + z*z ;}

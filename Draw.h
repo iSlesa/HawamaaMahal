@@ -669,7 +669,8 @@ void Clear(){
             if (j > g_height || i > g_width || i<0 || j<0) return;
 
     unsigned char c = 255;
-    int r=255, g=255, b=255;
+    //int r=255, g=255, b=255;
+     int r=176, g=226,	b=255;
     unsigned int color = (c << 24) | (r << 16) | (g << 8) | b;
 
     g_framebuffer[j*g_width + i] = color;

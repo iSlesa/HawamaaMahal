@@ -1,5 +1,6 @@
 
 #pragma once
+#include<math.h>
 
 class shapes{
     protected:
@@ -79,18 +80,18 @@ class cube: public shapes{
             Triangle T10(v[7],v[3],v[2]);
             Triangle T11(v[5],v[0],v[4]);
             Triangle T12(v[5],v[0],v[1]);
-            T1.DrawTriangle(1,2,3);
-            T2.DrawTriangle(1,2,3);
+            T1.DrawTriangle(205,	193,	197);
+            T2.DrawTriangle(205,	193,	197);
             T3.DrawTriangle(205,	193,	197);
             T4.DrawTriangle(205,	193,	197);
-            T5.DrawTriangle(43,132,123);
-            T6.DrawTriangle(43,132,123);
-//            T7.DrawTriangle(18,232,123);
-//            T8.DrawTriangle(18,232,123);
-            T9.DrawTriangle(43,132,123);
-            T10.DrawTriangle(43,132,123);
-            T11.DrawTriangle(18,232,123);
-            T12.DrawTriangle(18,232,123);
+            T5.DrawTriangle(205,	193,	197);
+            T6.DrawTriangle(205,	193,	197);
+            T7.DrawTriangle(205,	193,	197);
+            T8.DrawTriangle(205,	193,	197);
+            T9.DrawTriangle(205,	193,	197);
+            T10.DrawTriangle(205,	193,	197);
+            T11.DrawTriangle(205,	193,	197);
+            T12.DrawTriangle(205,	193,	197);
         }
         ~cube()
         {
@@ -201,6 +202,67 @@ class flag: public shapes{
         {
             delete ver;
         }
+
+};
+
+class sphere: public shapes{
+    private:
+        float radius;
+        int bPower,bPoints, bMask;
+        int sections_in_b;
+        int total_p;
+        float section_arc;
+        float x_angle, y_angle;
+        float x,y,z;
+        Vector center;
+    public:
+
+        sphere(Vector c, float r)
+        {
+            center=c;
+            radius=r;
+            bPower= 8; bPoints=256; bMask=bPoints-2;
+            sections_in_b=((bPoints/2)-1);
+            total_p= sections_in_b*bPoints;
+            section_arc = 6.28/(float)sections_in_b;
+            ver = new Vector[total_p];
+        }
+
+        void Draw(Vector Camera, Vector LookTo,float near, float far, float width, float height)
+        {
+            for(int i=0; i<total_p;i++)
+            {
+                x_angle = (float)(i&1)+(i>>bPower);
+                y_angle = (float)((i&bMask)>>1)+((i>>bPower)*sections_in_b);
+                x_angle*=(float)section_arc/2.0f; // remember - 180° x rot not 360
+                y_angle*=(float)section_arc;
+                x= radius*sin(x_angle)*sin(y_angle);
+                y= radius*cos(x_angle);
+                z= radius*sin(x_angle)*cos(y_angle);
+                ver[i] = Vector(x,y,z);
+                ver[i] = Vector(x+center.x,y+center.y,z+center.z);
+            }
+            point _2d[total_p];
+            for(int i=0;i<total_p;i++)
+            {
+            _2d[i] = WorldToPixel(ver[i],Camera,LookTo,near,far,width,height);
+            }
+            Vertex v[total_p];
+            for(int i=0;i<total_p;i++)
+            {
+            v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
+            }
+            for(int j=0; j<total_p-2;j++)
+            {
+                Triangle T(v[j],v[j+1],v[j+2]);
+                T.DrawTriangle(0,0,0);
+            }
+        }
+        ~sphere()
+        {
+            delete ver;
+        }
+
 
 };
 
