@@ -64,14 +64,14 @@ void Render(Vector Camera)
 //    e11.DrawLine(16,140,31);
 //    e12.DrawLine(16,1,31);
 
-    cube base(Vector(0,0,0),100,-100,5);
-    cube side1(Vector(0,50,5),5,5,50);
-    cube side2(Vector(0,50,50+50),5,5,50);
-    cube side3(Vector(45+50,50,50+50),5,5,50);
-    cube side4(Vector(45+50,50,5),5,5,50);
-    cube main(Vector(5+50/2,40,5+50/2),40,-40,40);
-    pyramid top(Vector(25+25,70,25+25),30,40);
-    flag f(Vector(25+25,70,25+25),Vector(25+25,80,25+25),Vector(25+25,75,25+25),Vector(25+25,80,25+25),Vector(27.5+25,75,25+25));
+    cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
+    cube side1(Vector(0,50,5),5,5,50,224,	255,	255);
+    cube side2(Vector(0,50,50+50),5,5,50,224,	255,	255);
+    cube side3(Vector(45+50,50,50+50),5,5,50,224,	255,	255);
+    cube side4(Vector(45+50,50,5),5,5,50,224,	255,	255);
+    cube main(Vector(5+50/2,40,5+50/2),40,-40,40,255,	182, 193);
+    pyramid top(Vector(25+25,70,25+25),30,40,238	,162	,173);
+    flag f(Vector(25+25,70,25+25),Vector(25+25,80,25+25),Vector(25+25,75,25+25),Vector(25+25,80,25+25),Vector(27.5+25,75,25+25),102	,139	,139);
     top.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     base.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     side1.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
@@ -81,10 +81,10 @@ void Render(Vector Camera)
     main.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     f.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
 
-    sphere golo1(Vector(2.5,57.5,2.5),5);
-    sphere golo2(Vector(2.5,57.5,97.5),5);
-    sphere golo3(Vector(97.5,57.5,97.5),5);
-    sphere golo4(Vector(97.5,57.5,2.5),5);
+    sphere golo1(Vector(2.5,57.5,2.5),5,139	,0,	139);
+    sphere golo2(Vector(2.5,57.5,97.5),5,139	,0,	139);
+    sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
+    sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
     golo1.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     golo2.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
     golo3.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);

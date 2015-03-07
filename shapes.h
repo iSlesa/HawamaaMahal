@@ -5,6 +5,7 @@
 class shapes{
     protected:
         Vector* ver;
+        int r,g,b;
     public:
         void Draw()
         {
@@ -13,8 +14,11 @@ class shapes{
 };
 class cube: public shapes{
     public:
-        cube(Vector v, int l, int b, int h)
+        cube(Vector v, int l, int b, int h, int r, int g,int blue)
         {
+            this->r=r;
+            this->g=g;
+            this->b=blue;
             ver = new Vector[8];
             ver[0]=v;
             ver[1]=Vector(v.x+l,v.y,v.z);
@@ -80,18 +84,18 @@ class cube: public shapes{
             Triangle T10(v[7],v[3],v[2]);
             Triangle T11(v[5],v[0],v[4]);
             Triangle T12(v[5],v[0],v[1]);
-            T1.DrawTriangle(205,	193,	197);
-            T2.DrawTriangle(205,	193,	197);
-            T3.DrawTriangle(205,	193,	197);
-            T4.DrawTriangle(205,	193,	197);
-            T5.DrawTriangle(205,	193,	197);
-            T6.DrawTriangle(205,	193,	197);
-            T7.DrawTriangle(205,	193,	197);
-            T8.DrawTriangle(205,	193,	197);
-            T9.DrawTriangle(205,	193,	197);
-            T10.DrawTriangle(205,	193,	197);
-            T11.DrawTriangle(205,	193,	197);
-            T12.DrawTriangle(205,	193,	197);
+            T1.DrawTriangle(r,g,b);
+            T2.DrawTriangle(r,g,b);
+            T3.DrawTriangle(r,g,b);
+            T4.DrawTriangle(r,g,b);
+            T5.DrawTriangle(r,g,b);
+            T6.DrawTriangle(r,g,b);
+            T7.DrawTriangle(r,g,b);
+            T8.DrawTriangle(r,g,b);
+            T9.DrawTriangle(r,g,b);
+            T10.DrawTriangle(r,g,b);
+            T11.DrawTriangle(r,g,b);
+            T12.DrawTriangle(r,g,b);
         }
         ~cube()
         {
@@ -101,8 +105,11 @@ class cube: public shapes{
 
 class pyramid : public shapes{
     public:
-        pyramid(Vector v, int h, int w)
+        pyramid(Vector v, int h, int w, int r, int g,int b)
         {
+            this->r=r;
+            this->g=g;
+            this->b=b;
             ver = new Vector[5];
             ver[0]=v;
             ver[1]=Vector(v.x-w/2,v.y-h,v.z+w/2);
@@ -148,10 +155,10 @@ class pyramid : public shapes{
 //            Triangle T6(v[1],v[4],v[3]);
 //            Triangle T7(v[4],v[0],v[3]);
 //            Triangle T8(v[4],v[7],v[3]);
-            T1.DrawTriangle(232,223,1);
-            T2.DrawTriangle(232,223,1);
-            T3.DrawTriangle(18,232,123);
-            T4.DrawTriangle(18,232,123);
+            T1.DrawTriangle(r,g,b);
+            T2.DrawTriangle(r,g,b);
+            T3.DrawTriangle(r,g,b);
+            T4.DrawTriangle(r,g,b);
 //            T5.DrawTriangle(18,232,123);
 //            T6.DrawTriangle(18,232,123);
 //            T7.DrawTriangle(18,232,123);
@@ -167,8 +174,11 @@ class pyramid : public shapes{
 
 class flag: public shapes{
     public:
-    flag(Vector v1,Vector v2,Vector v3,Vector v4,Vector v5)
+    flag(Vector v1,Vector v2,Vector v3,Vector v4,Vector v5, int r, int g,int b)
     {
+        this->r=r;
+            this->g=g;
+            this->b=b;
         ver = new Vector[5];
         ver[0]=v1;
         ver[1]=v2;
@@ -195,6 +205,9 @@ class flag: public shapes{
         e0.DrawLine(16,0,31);
         e1.DrawLine(161,0,131);
         e2.DrawLine(16,0,31);
+
+        Triangle f(v[2],v[3],v[4]);
+        f.DrawTriangle(r,g,b);
 //
 //      DrawTriangle(v[0],v[1],v[2],g_width,g_height,16,0,161,zBuffer);
     }
@@ -217,10 +230,13 @@ class sphere: public shapes{
         Vector center;
     public:
 
-        sphere(Vector c, float r)
+        sphere(Vector c, float rad,  int r, int g,int b)
         {
+            this->r=r;
+            this->g=g;
+            this->b=b;
             center=c;
-            radius=r;
+            radius=rad;
             bPower= 8; bPoints=256; bMask=bPoints-2;
             sections_in_b=((bPoints/2)-1);
             total_p= sections_in_b*bPoints;
@@ -255,7 +271,7 @@ class sphere: public shapes{
             for(int j=0; j<total_p-2;j++)
             {
                 Triangle T(v[j],v[j+1],v[j+2]);
-                T.DrawTriangle(0,0,0);
+                T.DrawTriangle(r,g,b);
             }
         }
         ~sphere()
