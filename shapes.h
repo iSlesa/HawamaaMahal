@@ -97,6 +97,34 @@ class cube: public shapes{
             T11.DrawTriangle(r,g,b);
             T12.DrawTriangle(r,g,b);
         }
+        void rotateX(float theta)
+        {
+            for(int i=0;i<=7;i++)
+            {
+                RotateX(ver[i],theta);
+            }
+        }
+        void rotateY(float theta)
+        {
+            for(int i=0;i<=7;i++)
+            {
+                RotateY(ver[i],theta);
+            }
+        }
+        void rotateZ(float theta)
+        {
+            for(int i=0;i<=7;i++)
+            {
+                RotateZ(ver[i],theta);
+            }
+        }
+        void scale(float X,float Y,float Z)
+        {
+            for(int i=0;i<=7;i++)
+            {
+                Scale(ver[i],X,Y,Z);
+            }
+        }
         ~cube()
         {
             delete ver;
@@ -208,9 +236,38 @@ class flag: public shapes{
 
         Triangle f(v[2],v[3],v[4]);
         f.DrawTriangle(r,g,b);
+        }
 //
 //      DrawTriangle(v[0],v[1],v[2],g_width,g_height,16,0,161,zBuffer);
-    }
+    void rotateX(float theta)
+        {
+            for(int i=0;i<5;i++)
+            {
+                RotateX(ver[i],theta);
+            }
+        }
+        void rotateY(float theta)
+        {
+            for(int i=0;i<5;i++)
+            {
+                RotateY(ver[i],theta);
+            }
+        }
+        void rotateZ(float theta)
+        {
+            for(int i=0;i<5;i++)
+            {
+                RotateZ(ver[i],theta);
+            }
+        }
+        void scale(float X,float Y,float Z)
+        {
+            for(int i=0;i<5;i++)
+            {
+                Scale(ver[i],X,Y,Z);
+            }
+        }
+
     ~flag()
         {
             delete ver;
@@ -246,10 +303,6 @@ class sphere: public shapes{
             total_p= sections_in_b*bPoints;
             section_arc = 6.28/(float)sections_in_b;
             ver = new Vector[total_p];
-        }
-
-        void Draw(Vector Camera, Vector LookTo,float near, float far, float width, float height)
-        {
             for(int i=0; i<total_p;i++)
             {
                 x_angle = (float)(i&1)+(i>>bPower);
@@ -262,6 +315,11 @@ class sphere: public shapes{
                 ver[i] = Vector(x,y,z);
                 ver[i] = Vector(x+center.x,y+center.y,z+center.z);
             }
+        }
+
+        void Draw(Vector Camera, Vector LookTo,float near, float far, float width, float height)
+        {
+
             point _2d[total_p];
             for(int i=0;i<total_p;i++)
             {
@@ -287,6 +345,34 @@ class sphere: public shapes{
                 T.DrawTriangle(r,g,b);
             }
         }
+        void rotateX(float theta)
+        {
+            for(int i=0;i<total_p;i++)
+            {
+                RotateX(ver[i],theta);
+            }
+        }
+        void rotateY(float theta)
+        {
+            for(int i=0;i<total_p;i++)
+            {
+                RotateY(ver[i],theta);
+            }
+        }
+        void rotateZ(float theta)
+        {
+            for(int i=0;i<total_p;i++)
+            {
+                RotateZ(ver[i],theta);
+            }
+        }
+        void scale(float X,float Y,float Z)
+        {
+            for(int i=0;i<total_p;i++)
+            {
+                Scale(ver[i],X,Y,Z);
+            }
+        }
         ~sphere()
         {
             delete ver;
@@ -296,7 +382,8 @@ class sphere: public shapes{
 };
 
 class clouds: public shapes{
-    public:
+
+public:
     clouds()
     {
     }

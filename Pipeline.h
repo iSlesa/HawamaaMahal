@@ -86,3 +86,4 @@ point WorldToPixel(const Vector World,const Vector& Camera,const Vector& LookTo,
     x = WorldToView(World,Camera,LookTo,near,far,width,height);
     return ViewToPixel(x,Camera,LookTo,near,far,width,height);
 }
+

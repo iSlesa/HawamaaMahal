@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include "Matrix.h"
+const float pi = 3.1415926535897;
 
 class Vector{
     public:
@@ -44,3 +45,11 @@ class point{
                 z = in.z;
             }
 };
+
+
+void RotateX(Vector& Point,float theta);
+void RotateY(Vector& Point,float theta);
+void RotateZ(Vector& Point,float theta);
+void Translate(Vector& Point,float x, float y, float z);
+void Scale(Vector& Point, float sx, float sy, float sz);
+

@@ -274,7 +274,7 @@ class Triangle{
 			int l1x0 = e1[0].x, l1x1 = e1[1].x;
 			int l2x0 = e2[0].x, l2x1 = e2[1].x;
 			int l1y0 = e1[0].y, l1y1 = e1[1].y;
-			int l2y0 = e2[0].y, l2y1 = e2[1].y;
+//			int l2y0 = e2[0].y, l2y1 = e2[1].y;
 
 			int dx1 = l1x0 - l1x1;
 			int dx2 = l2x0 - l2x1;
