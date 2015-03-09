@@ -5,107 +5,122 @@
 #include "Draw.h"
 #include "Pipeline.h"
 #include "shapes.h"
+#include <cstdlib>
 using namespace std;
 
 void Render(Vector Camera)
 {
     // All rendering code goes here:
-    Vector LookTo(0,0,0);
-//    Vector aa(0,0,0);
-//    Vector bb(10,0,0);
-//    Vector cc(10,10,0);
-//    Vector dd(0,10,0);
-//    Vector ee(0,0,10);
-//    Vector ff(10,0,10);
-//    Vector gg(10,10,10);
-//    Vector hh(0,10,10);
-//    point a1,b1,c1,d1,e1,f1,g1,h1;
-//    a1=WorldToPixel(aa,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    b1=WorldToPixel(bb,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    c1=WorldToPixel(cc,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    d1=WorldToPixel(dd,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    e1=WorldToPixel(ee,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    f1=WorldToPixel(ff,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    g1=WorldToPixel(gg,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//    h1=WorldToPixel(hh,Camera,LookTo,0.01f,1000.0f, 800, 600);
-//
-//    Vertex a(a1.x,a1.y);
-//    Vertex b(b1.x,b1.y);
-//    Vertex c(c1.x,c1.y);
-//    Vertex d(d1.x,d1.y);
-//    Vertex e(e1.x,e1.y);
-//    Vertex f(f1.x,f1.y);
-//    Vertex g(g1.x,g1.y);
-//    Vertex h(h1.x,h1.y);
-//
-//    Line e0(a,b);
-//    Line e2(b,c);
-//    Line e3(c,d);
-//    Line e4(d,a);
-//    Line e5(e,f);
-//    Line e6(f,g);
-//    Line e7(g,h);
-//    Line e8(h,e);
-//    Line e9(a,e);
-//    Line e10(b,f);
-//    Line e11(c,g);
-//    Line e12(d,h);
-//
-//    e0.DrawLine(16,0,31);
-//    e2.DrawLine(161,0,131);
-//    e3.DrawLine(16,0,31);
-//    e4.DrawLine(16,0,31);
-//    e5.DrawLine(16,0,31);
-//    e6.DrawLine(126,0,31);
-//    e7.DrawLine(16,0,31);
-//    e8.DrawLine(1,0,31);
-//    e9.DrawLine(16,110,31);
-//    e10.DrawLine(16,0,31);
-//    e11.DrawLine(16,140,31);
-//    e12.DrawLine(16,1,31);
+    Vector LookTo(50,0,0);
 
     cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
     cube side1(Vector(0,50,5),5,5,50,224,	255,	255);
     cube side2(Vector(0,50,50+50),5,5,50,224,	255,	255);
     cube side3(Vector(45+50,50,50+50),5,5,50,224,	255,	255);
     cube side4(Vector(45+50,50,5),5,5,50,224,	255,	255);
-    cube main(Vector(5+50/2,40,5+50/2),40,-40,40,255,	182, 193);
-    pyramid top(Vector(25+25,70,25+25),30,40,238	,162	,173);
-    flag f(Vector(25+25,70,25+25),Vector(25+25,80,25+25),Vector(25+25,75,25+25),Vector(25+25,80,25+25),Vector(27.5+25,75,25+25),102	,139	,139);
-    top.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    base.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    side1.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    side2.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    side3.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    side4.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    main.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    f.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    cube main(Vector(5+50/2-15,50,5+50/2-15),40+30,-40-30,50,255,	182, 193);
+    cube main1(Vector(15,55,85),5,5,5,255,	182, 193);
+    main1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main2(Vector(80,55,85),5,5,5,255,	182, 193);
+    main2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main3(Vector(80,55,20),5,5,5,255,	182, 193);
+    main3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main4(Vector(15,55,20),5,5,5,255,	182, 193);
+    main4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main5(Vector(27,55,20),5,5,5,255,	182, 193);
+    main5.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main6(Vector(39,55,20),5,5,5,255,	182, 193);
+    main6.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main7(Vector(52,55,20),5,5,5,255,	182, 193);
+    main7.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main8(Vector(66,55,20),5,5,5,255,	182, 193);
+    main8.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main10(Vector(80,55,31),5,5,5,255,	182, 193);
+    main10.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main11(Vector(80,55,43),5,5,5,255,	182, 193);
+    main11.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main12(Vector(80,55,57),5,5,5,255,	182, 193);
+    main12.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main13(Vector(80,55,72),5,5,5,255,	182, 193);
+    main13.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main14(Vector(68,55,85),5,5,5,255,	182, 193);
+    main14.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main15(Vector(55,55,85),5,5,5,255,	182, 193);
+    main15.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main16(Vector(44,55,85),5,5,5,255,	182, 193);
+    main16.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main17(Vector(29,55,85),5,5,5,255,	182, 193);
+    main17.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main18(Vector(15,55,73),5,5,5,255,	182, 193);
+    main18.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main19(Vector(15,55,60),5,5,5,255,	182, 193);
+    main19.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main20(Vector(15,55,47),5,5,5,255,	182, 193);
+    main20.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    cube main21(Vector(15,55,35),5,5,5,255,	182, 193);
+    main21.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+
+    cube top(Vector(30,75,30),40,-40,25,255,	0, 193);
+    top.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+  //  pyramid top(Vector(25+25,70,25+25),30,40,238	,162	,173);
+    flag f(Vector(25+25,95,25+25),Vector(25+25,120,25+25),Vector(25+25,105,25+25),Vector(25+25,120,25+25),Vector(27.5+25+20,105,25+25),102	,139	,139);
+ //   top.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    base.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    side1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    side2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    side3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    side4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    main.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    f.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
 
     sphere golo1(Vector(2.5,57.5,2.5),5,139	,0,	139);
     sphere golo2(Vector(2.5,57.5,97.5),5,139	,0,	139);
     sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
     sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
-    golo1.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    golo2.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    golo3.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
-    golo4.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    golo1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    golo2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    golo3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    golo4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
 
-//    cube hawa(Vector(20,20,12),23,23,23);
-//    hawa.Draw(Camera,LookTo,0.01f,1000.0f,1024,700);
+    sphere semi(Vector(50,75,50),20,139,0,139);
+    semi.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
 
-//    Triangle T(1,23,12,12,23,432);
-//    T.DrawTriangle(16,0,331);
+    clouds thisss(Vector(-5,0,-5),255,255,255);
+    clouds thissss(Vector(-5-10,0,25),255,255,255);
+    clouds thisssss(Vector(-5-29,0,10),255,255,255);
+    thisss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    thissss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    thisssss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+
+    clouds yo(Vector(105,0,-5),255,255,255);
+    clouds yo1(Vector(105-21,0,25),255,255,255);
+    clouds yo2(Vector(105-8,0,10),255,255,255);
+    yo.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    yo1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    yo2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+
+    clouds this1(Vector(105,0,95),255,255,255);
+    clouds this2(Vector(105-12,0,125),255,255,255);
+    clouds this3(Vector(105-18,0,110),255,255,255);
+    this1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+
+    clouds this11(Vector(-5,0,95),255,255,255);
+    clouds this22(Vector(-5-12,0,125),255,255,255);
+    clouds this33(Vector(-5-9,0,110),255,255,255);
+    this11.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this22.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this33.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
 }
 
 int main()
 {
-    // point a(1,2,3),b(4,5,6),c(2,0,1);
-
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_Window *win = SDL_CreateWindow("Teskaaaa Baaaaaaajey!", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Surface *screen = SDL_GetWindowSurface(win);
-    Vector Camera(0,0,-30);
+    Vector Camera(30,50,-100);
     g_framebuffer = (unsigned int*)screen->pixels;
     g_width = screen->w;
     g_height = screen->h;

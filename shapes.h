@@ -202,9 +202,9 @@ class flag: public shapes{
         Line e1(v[3],v[4]);
         Line e2(v[4],v[2]);
 
-        e0.DrawLine(16,0,31);
-        e1.DrawLine(161,0,131);
-        e2.DrawLine(16,0,31);
+        e0.DrawLine(r,g,b);
+//        e1.DrawLine(161,0,131);
+//        e2.DrawLine(16,0,31);
 
         Triangle f(v[2],v[3],v[4]);
         f.DrawTriangle(r,g,b);
@@ -229,6 +229,10 @@ class sphere: public shapes{
         float x,y,z;
         Vector center;
     public:
+
+        sphere()
+        {
+        }
 
         sphere(Vector c, float rad,  int r, int g,int b)
         {
@@ -268,6 +272,15 @@ class sphere: public shapes{
             {
             v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
             }
+//            for(int j=0; j<total_p-2;j++)
+//            {
+//                Line l1(v[j],v[j+1]);
+//                Line l2(v[j],v[j+2]);
+//                Line l3(v[j+2],v[j+1]);
+//                l1.DrawLine(0,0,0);
+//                l2.DrawLine(0,0,0);
+//                l3.DrawLine(0,0,0);
+//            }
             for(int j=0; j<total_p-2;j++)
             {
                 Triangle T(v[j],v[j+1],v[j+2]);
@@ -282,3 +295,32 @@ class sphere: public shapes{
 
 };
 
+class clouds: public shapes{
+    public:
+    clouds()
+    {
+    }
+    clouds(Vector v,int r,int g,int b)
+    {
+        ver = new Vector[1];
+        ver[0] =v;
+        this->r=r;
+        this->g=g;
+        this->b=b;
+    }
+    void Draw(Vector Camera, Vector LookTo,float near, float far, float width, float height)
+    {
+        sphere cloud1(ver[0],10,r,g,b);
+        sphere cloud2(ver[0]+Vector(18,0,0),15,r,g,b);
+        sphere cloud3(ver[0]+Vector(38,0,0),10,r,g,b);
+
+        cloud1.Draw(Camera, LookTo, near, far,  width,  height);
+        cloud2.Draw(Camera, LookTo, near, far,  width,  height);
+        cloud3.Draw(Camera, LookTo, near, far,  width,  height);
+    }
+    ~clouds()
+    {
+        delete ver;
+    }
+
+};
