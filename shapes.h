@@ -276,7 +276,7 @@ class sphere: public shapes{
         {
             for(int j=0;j<rings*sectors;j++)
             {
-                Vector  /*l(1,-1,1);/*/ l = (L - ver[j]);
+                Vector  l(0,0,-1);// l = (L - ver[j]);
              //   Vector v = Camera- ver[j];
                // Vector H;
                // H = (l + v);
@@ -285,7 +285,7 @@ class sphere: public shapes{
                 l.normalize();
                 Vector n = (ver[j]-center)/radius;
                 n.normalize();
-                ver[j].i = (1-1*l.dotProduct(n)/*-n.dotProduct(H))/3;*/)/2;
+                ver[j].i = (1+1*l.dotProduct(n)/*-n.dotProduct(H))/3;*/)/2;
                 if (ver[j].i < 0)
                  ver[j].i = 0;
                 if (ver[j].i > 1)
