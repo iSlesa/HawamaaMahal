@@ -77,11 +77,11 @@ void Render(const Matrix w2v,const Matrix projection)
     sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
     sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
 
-    sphere light(Vector(150,190,150),5,255,255,255);
-
-    sphere semi(Vector(50,75,50),20,139,0,139);
-
+    sphere light(Vector(150,100,-12),5,255,255,255);
 //
+    sphere semi(Vector(50,75,50),20,139,0,139);
+//
+////
     clouds thisss(Vector(-5,0,-5),255,255,255);
     clouds thissss(Vector(-5-10,0,25),255,255,255);
     clouds thisssss(Vector(-5-29,0,10),255,255,255);
@@ -324,9 +324,9 @@ void Render(const Matrix w2v,const Matrix projection)
     golo2.Draw(w2v, projection);
     golo3.Draw(w2v, projection);
     golo4.Draw(w2v, projection);
-
+//
     semi.Draw(w2v, projection);
-
+//
     thisss.Draw(w2v, projection);
     thissss.Draw(w2v, projection);
     thisssss.Draw(w2v, projection);

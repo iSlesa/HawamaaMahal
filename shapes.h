@@ -1,10 +1,11 @@
 
 #pragma once
 #include "Pipeline.h"
-#include<math.h>
+#include <math.h>
+#include <vector>
 #define ABS(a) ((a<0)? a*-1 : a)
 
-Vector L(150,190,150);
+Vector L(150,100,-12);
 
 class shapes{
     protected:
@@ -211,22 +212,18 @@ class flag: public shapes{
 class sphere: public shapes{
     private:
         float radius;
-        int bPower,bPoints, bMask;
-        int sections_in_b;
-        int total_p;
-        float section_arc;
-        float x_angle, y_angle;
-        float x,y,z;
         Vector center;
+        int rings, sectors;
+        float x,y,z;
+      //  unsigned short* indices;
+        std::vector<unsigned short> indices;
     public:
 
         sphere()
         {
-            bPower= 4; bPoints=16; bMask=bPoints-2;
-            sections_in_b=((bPoints/2)-1);
-            total_p= sections_in_b*bPoints;
-            section_arc = 6.28/(float)sections_in_b;
-            ver = new Vector[total_p];
+            rings = 32;
+            sectors = 32;
+            ver = new Vector[rings*sectors];
         }
 
         sphere(Vector c, float rad,  int r, int g,int b)
@@ -236,29 +233,48 @@ class sphere: public shapes{
             this->b=b;
             center=c;
             radius=rad;
-            bPower= 8; bPoints=256; bMask=bPoints-2;
-            sections_in_b=((bPoints/2)-1);
-            total_p= sections_in_b*bPoints;
-            section_arc = 6.28/(float)sections_in_b;
-            ver = new Vector[total_p];
-            for(int i=0; i<total_p;i++)
+            rings = 32;
+            sectors = 32;
+            ver = new Vector[rings*sectors];
+
+            float R = 1.0f / float(rings-1);
+            float S = 1.0f / float(sectors-1);
+
+            int i=0;
+            for (int r=0; r<rings; ++r)
+                for (int s=0; s<sectors; ++s)
+                {
+#define PI (3.14159265359f)
+#define PI_2 (1.57079632679f)
+                    float y = -sinf(-PI_2 + PI * r * R);
+                    float x = cosf(2 * PI * s * S) * sinf(PI * r * R);
+                    float z = sinf(2 * PI * s * S) * sinf(PI * r * R);
+
+                    ver[i] = Vector(x*radius+ center.x,y*radius+ center.y,z*radius+center.z);
+//
+//                    m_vertices[i].normal.x = x;
+//                    m_vertices[i].normal.y = y;
+//                    m_vertices[i].normal.z = z;
+                    ++i;
+                }
+            indices.resize((rings-1)*(sectors-1)*6);
+            auto id = &indices[0];
+            for (int r=0; r<rings-1; ++r)
+            for (int s=0; s<sectors-1; ++s)
             {
-                x_angle = (float)(i&1)+(i>>bPower);
-                y_angle = (float)((i&bMask)>>1)+((i>>bPower)*sections_in_b);
-                x_angle*=(float)section_arc/2.0f; // remember - 180° x rot not 360
-                y_angle*=(float)section_arc;
-                x= radius*sin(x_angle)*sin(y_angle);
-                y= radius*cos(x_angle);
-                z= radius*sin(x_angle)*cos(y_angle);
-                ver[i] = Vector(x,y,z);
-                ver[i] = Vector(x+center.x,y+center.y,z+center.z);
+                *id++ = uint16_t(r*sectors + s);
+                *id++ = uint16_t(r*sectors + s+1);
+                *id++ = uint16_t((r+1)*sectors + s+1);
+                *id++ = uint16_t(r*sectors + s);
+                *id++ = uint16_t((r+1)*sectors + s+1);
+                *id++ = uint16_t((r+1)*sectors + s);
             }
         }
 
         //void calculateIntensity(Vector Camera)
         void calculateIntensity()
         {
-            for(int j=0;j<total_p;j++)
+            for(int j=0;j<rings*sectors;j++)
             {
                 Vector  /*l(1,-1,1);/*/ l = (L - ver[j]);
              //   Vector v = Camera- ver[j];
@@ -267,9 +283,9 @@ class sphere: public shapes{
                // float a = H.magnitude();
                 //H = (l+v)/a;
                 l.normalize();
-                Vector n = ver[j];//-center;
+                Vector n = (ver[j]-center)/radius;
                 n.normalize();
-                ver[j].i = (1+1*l.dotProduct(n)/*-n.dotProduct(H))/3;*/)/2;
+                ver[j].i = (1-1*l.dotProduct(n)/*-n.dotProduct(H))/3;*/)/2;
                 if (ver[j].i < 0)
                  ver[j].i = 0;
                 if (ver[j].i > 1)
@@ -282,8 +298,8 @@ class sphere: public shapes{
         {
             //calculateIntensity(Vector(0,50,-100));
             calculateIntensity();
-            Vertex v[total_p];
-            for(int j=0;j<total_p;j++)
+            Vertex v[rings*sectors];
+            for(int j=0;j<rings*sectors;j++)
             {
             v[j] = WorldToPixel(ver[j],w2c,projection);
             v[j].i = ver[j].i;
@@ -297,15 +313,15 @@ class sphere: public shapes{
 //                l2.DrawLine(0,0,0);
 //                l3.DrawLine(0,0,0);
 //            }
-            for(int j=0; j<total_p-2;j++)
+            for(int j=0; j<indices.size();j+=3)
             {
-                Triangle T(v[j],v[j+1],v[j+2]);
+                Triangle T(v[indices[j]],v[indices[j+1]],v[indices[j+2]]);
                 T.DrawTriangle(r,g,b);
             }
         }
         void _trans(Matrix m)
         {
-            for(int i=0;i<total_p;i++)
+            for(int i=0;i<rings*sectors;i++)
             {
                 Transform(m,ver[i]);
             }
@@ -315,19 +331,11 @@ class sphere: public shapes{
             r= in.r;
             g= in.g;
             b = in.b;
-//            radius = in.radius;
-//            bPower = in.bPower;
-//            bPoints = in.bPoints;
-//            bMask = in.bMask;
-//            sections_in_b = in.sections_in_b;
-            total_p = in.total_p;
-//            section_arc = in.section_arc;
-//            x_angle= in.x_angle;
-//            y_angle = in.y_angle;
-//            x = in.x; y=in.y; z=in.z;
-//            center = in.center;
-            ver = new Vector[total_p];
-            for(int i=0;i<total_p;i++)
+            rings = in.rings;
+            rings = in.sectors;
+            indices = in.indices;
+            ver = new Vector[rings*sectors];
+            for(int i=0;i<rings*sectors;i++)
             {
                 ver[i] = in.ver[i];
             }
@@ -335,6 +343,7 @@ class sphere: public shapes{
         ~sphere()
         {
             delete ver;
+            //delete indices;
         }
 
 
