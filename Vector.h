@@ -2,11 +2,14 @@
 
 #include <math.h>
 #include "Matrix.h"
+
+class Vertex;  //forward declaration of class Vertex
 const float pi = 3.1415926535897;
 
 class Vector{
     public:
     float x,y,z;
+    float i;
     public:
     Vector(){}
     Vector(float xx,float yy, float zz):x(xx),y(yy),z(zz){}
@@ -33,23 +36,18 @@ class Vector{
             }}
     float& operator [] (int i){return (&x)[i];}
 };
-class point{
-    public: float x,y,z; //z for depth
-    public: point(){}
-            point(float xx,float yy):x(xx),y(yy){z=0;}
-            point(float xx, float yy, float zz): x(xx),y(yy),z(zz){}
-            point(const point& in):x(in.x),y(in.y),z(in.z){}
-            void operator = (const point& in){
-                x = in.x;
-                y = in.y;
-                z = in.z;
-            }
-};
 
+//transformation functions defined in transformation.cpp
 
-void RotateX(Vector& Point,float theta);
+Matrix rotX(float theta);
+Matrix rotY(float theta);
+Matrix rotZ(float theta);
+Matrix trans(float x, float y, float z);
+Matrix scal(float sx, float sy, float sz);
+void Transform(Matrix m, Vector& v);
+
+Matrix Cam(Vector& Camera, Vector& LookTo);
+
+Matrix proj(float near, float far, float width, float height);
+
 void RotateY(Vector& Point,float theta);
-void RotateZ(Vector& Point,float theta);
-void Translate(Vector& Point,float x, float y, float z);
-void Scale(Vector& Point, float sx, float sy, float sz);
-

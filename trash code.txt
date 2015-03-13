@@ -1,0 +1,467 @@
+/*
+class pyramid : public shapes{
+    public:
+        pyramid(Vector v, int h, int w, int r, int g,int b)
+        {
+            this->r=r;
+            this->g=g;
+            this->b=b;
+            ver = new Vector[5];
+            ver[0]=v;
+            ver[1]=Vector(v.x-w/2,v.y-h,v.z+w/2);
+            ver[2]=Vector(v.x+w/2,v.y-h,v.z+w/2);
+            ver[3]=Vector(v.x+w/2,v.y-h,v.z-w/2);
+            ver[4]=Vector(v.x-w/2,v.y-h,v.z-w/2);
+        }
+        void Draw(Vector Camera, Vector LookTo,float near, float far, float width, float height)
+        {
+            point _2d[5];
+            for(int i=0;i<5;i++)
+            {
+                _2d[i] = WorldToPixel(ver[i],Camera,LookTo,near,far,width,height);
+            }
+            Vertex v[5];
+            for(int i=0;i<5;i++)
+            {
+                v[i] = Vertex(_2d[i].x,_2d[i].y,_2d[i].z);
+            }
+            Line e0(v[1],v[2]);
+            Line e1(v[2],v[3]);
+            Line e2(v[3],v[4]);
+            Line e3(v[4],v[1]);
+            Line e4(v[0],v[1]);
+            Line e5(v[0],v[2]);
+            Line e6(v[0],v[3]);
+            Line e7(v[0],v[4]);
+
+//            e0.DrawLine(16,0,31);
+//            e1.DrawLine(161,0,131);
+//            e2.DrawLine(16,0,31);
+//            e3.DrawLine(16,0,31);
+//            e4.DrawLine(16,0,31);
+//            e5.DrawLine(126,0,31);
+//            e6.DrawLine(16,0,31);
+//            e7.DrawLine(1,0,31);
+
+            Triangle T1(v[0],v[2],v[3]);
+            Triangle T2(v[0],v[4],v[3]);
+            Triangle T3(v[0],v[1],v[4]);
+            Triangle T4(v[0],v[1],v[2]);
+//            Triangle T5(v[1],v[2],v[3]);
+//            Triangle T6(v[1],v[4],v[3]);
+//            Triangle T7(v[4],v[0],v[3]);
+//            Triangle T8(v[4],v[7],v[3]);
+            T1.DrawTriangle(r,g,b);
+            T2.DrawTriangle(r,g,b);
+            T3.DrawTriangle(r,g,b);
+            T4.DrawTriangle(r,g,b);
+//            T5.DrawTriangle(18,232,123);
+//            T6.DrawTriangle(18,232,123);
+//            T7.DrawTriangle(18,232,123);
+//            T8.DrawTriangle(18,232,123);
+
+
+        }
+        ~pyramid()
+        {
+            delete ver;
+        }
+};
+*/
+
+//        void rotateY(float theta)
+//        {
+//            for(int i=0;i<=7;i++)
+//            {
+//                RotateY(ver[i],theta);
+//            }
+//        }
+//        void rotateZ(float theta)
+//        {
+//            for(int i=0;i<=7;i++)
+//            {
+//                RotateZ(ver[i],theta);
+//            }
+//        }
+//        void scale(float X,float Y,float Z)
+//        {
+//            for(int i=0;i<=7;i++)
+//            {
+//                Scale(ver[i],X,Y,Z);
+//            }
+//        }
+
+//Transformation functions
+
+void RotateX(Vector& Point,float theta){
+    Matrix T(4,4); //Transformation matrix
+    Matrix P(4,1); //Point matrix
+    float angle = theta/180*pi;  //pi is defined in Vector.h
+    //Transformation matrix
+    T(0,0) = 1;     T(0,1) = 0;         T(0,2) = 0;             T(0,3) = 0;
+    T(1,0) = 0;     T(1,1) = cos(angle);T(1,2) = -sin(angle);   T(1,3) = 0;
+    T(2,0) = 0;     T(2,1) = sin(angle);T(2,2) = cos(angle);    T(2,3) = 0;
+    T(3,0) = 0;     T(3,1) = 0;         T(3,2) = 0;             T(3,3) = 1;
+    //Point in matrix form
+    P(0,0) = Point.x; P(0,1) = Point.y; P(0,2) = Point.z; P(0,3) = 1;
+
+    P = T*P;
+    Point.x = P(0,0);
+    Point.y = P(0,1);
+    Point.z = P(0,2);
+
+}
+
+void RotateY(Vector& Point,float theta){
+    Matrix T(4,4); //Transformation matrix
+    Matrix P(4,1); //Point matrix
+    float angle = theta/180*pi;
+    //Transformation matrix
+    T(0,0) = cos(angle);    T(0,1) = 0;         T(0,2) = sin(angle);    T(0,3) = 0;
+    T(1,0) = 0;             T(1,1) = 1;         T(1,2) = 0;             T(1,3) = 0;
+    T(2,0) = -sin(angle);   T(2,1) = 0;         T(2,2) = cos(angle);    T(2,3) = 0;
+    T(3,0) = 0;             T(3,1) = 0;         T(3,2) = 0;             T(3,3) = 1;
+    //Point in matrix form
+    P(0,0) = Point.x; P(0,1) = Point.y; P(0,2) = Point.z; P(0,3) = 1;
+
+    P = T*P;
+    Point.x = P(0,0);
+    Point.y = P(0,1);
+    Point.z = P(0,2);
+
+}
+
+
+void RotateZ(Vector& Point,float theta){
+    Matrix T(4,4); //Transformation matrix
+    Matrix P(4,1); //Point matrix
+    float angle = theta/180*pi;
+    //Transformation matrix
+    T(0,0) = cos(angle);    T(0,1) = -sin(theta);       T(0,2) = 0;    T(0,3) = 0;
+    T(1,0) = sin(angle);    T(1,1) = cos(theta);        T(1,2) = 0;    T(1,3) = 0;
+    T(2,0) = 0;             T(2,1) = 0;                 T(2,2) = 1;    T(2,3) = 0;
+    T(3,0) = 0;             T(3,1) = 0;                 T(3,2) = 0;    T(3,3) = 1;
+    //Point in matrix form
+    P(0,0) = Point.x; P(0,1) = Point.y; P(0,2) = Point.z; P(0,3) = 1;
+
+    P = T*P;
+    Point.x = P(0,0);
+    Point.y = P(0,1);
+    Point.z = P(0,2);
+
+}
+
+void Translate(Vector& Point,float x,float y,float z){
+    Matrix T(4,4); //Transformation matrix
+    Matrix P(4,1); //Point matrix
+    //Transformation matrix
+    T(0,0) = 1;    T(0,1) = 0;      T(0,2) = 0;    T(0,3) = x;
+    T(1,0) = 0;    T(1,1) = 1;      T(1,2) = 0;    T(1,3) = y;
+    T(2,0) = 0;    T(2,1) = 0;      T(2,2) = 1;    T(2,3) = z;
+    T(3,0) = 0;    T(3,1) = 0;      T(3,2) = 0;    T(3,3) = 1;
+    //Point in matrix form
+    P(0,0) = Point.x; P(0,1) = Point.y; P(0,2) = Point.z; P(0,3) = 1;
+
+    P = T*P;
+    Point.x = P(0,0);
+    Point.y = P(0,1);
+    Point.z = P(0,2);
+
+}
+
+void Scale(Vector& Point, float sx, float sy, float sz){
+    Matrix T(4,4);
+    Matrix P(4,1);
+    //Transformation matrix
+    T(0,0) = sx;    T(0,1) = 0;      T(0,2) = 0;    T(0,3) = 0;
+    T(1,0) = 0;    T(1,1) = sy;      T(1,2) = 0;    T(1,3) = 0;
+    T(2,0) = 0;    T(2,1) = 0;      T(2,2) = sz;    T(2,3) = 0;
+    T(3,0) = 0;    T(3,1) = 0;      T(3,2) = 0;    T(3,3) = 1;
+    //Point in matrix form
+    P(0,0) = Point.x; P(0,1) = Point.y; P(0,2) = Point.z; P(0,3) = 1;
+
+    P = T*P;
+    Point.x = P(0,0);
+    Point.y = P(0,1);
+    Point.z = P(0,2);
+}
+
+void RotateX(Vector& Point,float theta);
+void RotateY(Vector& Point,float theta);
+void RotateZ(Vector& Point,float theta);
+void Translate(Vector& Point,float x, float y, float z);
+void Scale(Vector& Point, float sx, float sy, float sz);
+
+Khatri ko drawtriangle function
+
+ //       void DrawTriangle(int r,int g,int b){
+//            int x1=v1.x;
+//            int x2=v2.x;
+//            int x3=v3.x;
+//            int y1=v1.y;
+//            int y2=v2.y;
+//            int y3=v3.y;
+//            int y[]={y1,y2,y3};
+//            int x[]={x1,x2,x3};
+//            for(int j=0;j<2;j++){
+//                for(int k=j+1;k<3;k++)
+//                    if(y[j]>y[k]){
+//                        int temp=y[j];
+//                        y[j]=y[k];
+//                        y[k]=temp;
+//                        temp=x[j];
+//                        x[j]=x[k];
+//                        x[k]=temp;
+//                    }
+//            }
+//            int y_top=y[2];
+//            int y_mid=y[1];
+//            int y_bottom=y[0];
+//
+//            //From Top to Mid
+//
+//            Vertex start(x[2],y_top);
+//            Vertex end(x[2],y_top);
+//
+//            //For Start Edge
+//            int dxs=abs(x[1]-x[2]);
+//            int dys=abs(y[1]-y[2]);
+//            int xs_inc=1;
+//            if((x[1]-x[2]!=0)){
+//                xs_inc=(x[1]-x[2])/dxs;
+//            }
+//
+//            int ps1=2*dxs-dys;
+//            int ps2=2*dys-dxs;
+//
+//            //For End Edge
+//            int dxe=abs(x[0]-x[2]);
+//            int dye=abs(y[0]-y[2]);
+//            int xe_inc=1;
+//            if((x[0]-x[2]!=0)){
+//                xe_inc=(x[0]-x[2])/dxe;
+//            }
+//
+//            int pe1=2*dxe-dye;
+//            int pe2=2*dye-dxe;
+//
+//            int ks=0;
+//            int ke=0;
+//
+//            Line ScanLine(start,end);
+//
+//            if(y_top!=y_mid){
+//            for(int y=y_top;y>=y_mid;y--){
+//                ScanLine.v1.set_y(y);
+//                ScanLine.v2.set_y(y);
+//                ScanLine.DrawLine(r,g,b);
+//                //for Start Edge
+//                {
+//                    if(dxs<dys){
+//                        if(ps1<0){
+//                            ps1=ps1+2*dxs;
+//                        }
+//                        else{
+//                            ScanLine.v1.increase_x(xs_inc);
+//                            ps1=ps1+2*dxs-2*dys;
+//                        }
+//                }
+//                    else{
+//                        while(ks!=dxs){
+//                            if(ps2<0){
+//                                ScanLine.v1.increase_x(xs_inc);
+//                                ps2=ps2+2*dys;
+//                            }
+//                            else{
+//                                ps2+=2*dys-2*dxs;
+//                                ScanLine.v1.increase_x(xs_inc);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                //for End Edge
+//                {
+//                    if(dxe<dye){
+//                        if(pe1<0){
+//                            pe1=pe1+2*dxe;
+//                        }
+//                        else{
+//                            ScanLine.v2.increase_x(xe_inc);
+//                            pe1=pe1+2*dxe-2*dye;
+//                        }
+//                    }
+//                    else{
+//                        while(ke!=dxe){
+//                            if(pe2<0){
+//                                ScanLine.v2.increase_x(xe_inc);
+//                                pe2=pe2+2*dye;
+//                            }
+//                            else{
+//                                pe2+=2*dye-2*dxe;
+//                                ScanLine.v2.increase_x(xe_inc);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            }
+//        ///////////////////////////////////
+//            //From Bottom to Mid
+//
+//            start.set_x(x[0]);
+//            end.set_x(x[0]);
+//
+//            Line Scanline2(start,end);
+//
+//            //For Start Edge
+//            dxs=abs(x[1]-x[0]);
+//            dys=abs(y[1]-y[0]);
+//            xs_inc=1;
+//            if((x[1]-x[0]!=0)){
+//                xs_inc=(x[1]-x[0])/dxs;
+//            }
+//
+//            ps1=2*dxs-dys;
+//            ps2=2*dys-dxs;
+//
+//            //For End Edge
+//            dxe=abs(x[2]-x[0]);
+//            dye=abs(y[2]-y[0]);
+//            xe_inc=1;
+//            if((x[2]-x[0]!=0)){
+//                xe_inc=(x[2]-x[0])/dxe;
+//            }
+//
+//            pe1=2*dxe-dye;
+//            pe2=2*dye-dxe;
+//
+//            ks=0;
+//            ke=0;
+//            if(y_bottom!=y_mid){
+//            for(int y=y_bottom;y<=y_mid;y++){
+//                Scanline2.v1.set_y(y);
+//                Scanline2.v2.set_y(y);
+//                Scanline2.DrawLine(r,g,b);
+//                //for Start Edge
+//                {
+//                    if(dxs<dys){
+//                        if(ps1<0){
+//                            ps1=ps1+2*dxs;
+//                        }
+//                        else{
+//                            Scanline2.v1.increase_x(xs_inc);
+//                            ps1=ps1+2*dxs-2*dys;
+//                        }
+//                    }
+//                    else{
+//                        while(ks!=dxs){
+//                            if(ps2<0){
+//                                Scanline2.v1.increase_x(xs_inc);
+//                                ps2=ps2+2*dys;
+//                            }
+//                            else{
+//                                ps2+=2*dys-2*dxs;
+//                                Scanline2.v1.increase_x(xs_inc);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                //for End Edge
+//                {
+//                    if(dxe<dye){
+//                        if(pe1<0){
+//                            pe1=pe1+2*dxe;
+//                        }
+//                        else{
+//                            Scanline2.v2.increase_x(xe_inc);
+//                            pe1=pe1+2*dxe-2*dye;
+//                        }
+//                    }
+//                    else{
+//                        while(ke!=dxe){
+//                            if(pe2<0){
+//                                Scanline2.v2.increase_x(xe_inc);
+//                                pe2=pe2+2*dye;
+//                            }
+//                            else{
+//                                pe2+=2*dye-2*dxe;
+//                                Scanline2.v2.increase_x(xe_inc);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            }
+        ///////////////////////////////////
+
+
+khatri ko drawline function
+
+//            int x1=v1.x;
+//            int x2=v2.x;
+//            int y1=v1.y;
+//            int y2=v2.y;
+//            int dx=abs(x2-x1);
+//   	        int dy=abs(y2-y1);
+//   	        int x_inc=1;
+//   	        int y_inc=1;
+//   	        if((x2-x1)!=0){
+//   	    	    x_inc=(x2-x1)/dx;
+//   	        }
+//   	        if((y2-y1)!=0){
+//   		        y_inc=(y2-y1)/dy;
+//   	        }
+//   	        Vertex P(x1,y1);
+//   	        PutPixel(P,r,g,b);
+//   	        if(dx<dy){
+//   		        int p=2*dx-dy;
+//   		        int k=0;
+//   		        while(k!=dy){
+//   			        if(p<0){
+//   				        P.increase_y(y_inc);
+//   				        p=p+2*dx;
+//   			        }
+//   			        else{
+//   				        P.increase_x(x_inc);
+//                        P.increase_y(y_inc);
+//   				        p=p+2*dx-2*dy;
+//   			        }
+//   			        k++;
+//   			        PutPixel(P,r,g,b);
+//   		        }
+//   	        }
+//   	        else{
+//   		        int p=2*dy-dx;
+//   		        int k=0;
+//   		        while(k!=dx){
+//   			        if(p<0){
+//   				        P.increase_x(x_inc);
+//   				        p=p+2*dy;
+//   			        }
+//   			        else{
+//   				        P.increase_x(x_inc);
+//   				        P.increase_y(y_inc);
+//   				        p=p+2*dy-2*dx;
+//   			        }
+//   			        k++;
+//   			        PutPixel(P,r,g,b);
+//   		        }
+//   	        }
+
+vertex vitra ko functions
+
+void increase_x(int x_inc){
+            x=x+x_inc;
+        }
+        void increase_y(int y_inc){
+            y=y+y_inc;
+        }
+        void set_x(int a){
+            x=a;
+        }
+        void set_y(int b){
+            y=b;

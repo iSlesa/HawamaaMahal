@@ -1,20 +1,21 @@
-
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <math.h>
 #include "Draw.h"
-#include "Pipeline.h"
+#include "Matrix.h"
 #include "shapes.h"
 #include <cstdlib>
+#include "Vector.h"
+
 using namespace std;
+//flags for transformation
+float thetaX=0,thetaY=0,thetaz=0,sx=1,sy=1,sz=1;
 
-float thetaX=0,thetaY=0,thetaz=0,sx=0,sy=0,sz=0;
-
-void Render(Vector Camera)
+void Render(const Matrix w2v,const Matrix projection)
 {
     // All rendering code goes here:
-    Vector LookTo(50,0,0);
 
+// initializing all the parts of the "Hawamma Mahal"
     cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
     cube side1(Vector(0,50,5),5,5,50,224,	255,	255);
     cube side2(Vector(0,50,50+50),5,5,50,224,	255,	255);
@@ -76,6 +77,8 @@ void Render(Vector Camera)
     sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
     sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
 
+    sphere light(Vector(150,190,150),5,255,255,255);
+
     sphere semi(Vector(50,75,50),20,139,0,139);
 
 //
@@ -97,201 +100,268 @@ void Render(Vector Camera)
     clouds this22(Vector(-5-12,0,125),255,255,255);
     clouds this33(Vector(-5-9,0,110),255,255,255);
 
-    if(sx!=0)
+    if(sx>0)
     {
-        base.scale(sx,sy,sz);
-        side1.scale(sx,sy,sz);
-        side2.scale(sx,sy,sz);
-        side3.scale(sx,sy,sz);
-        side4.scale(sx,sy,sz);
-        main.scale(sx,sy,sz);
-        door.scale(sx,sy,sz);
-        main.scale(sx,sy,sz);
+    Matrix _scale = scal(sx,sy,sz);
+        base._trans(_scale);
+        side1._trans(_scale);
+        side2._trans(_scale);
+        side3._trans(_scale);
+        side4._trans(_scale);
+        main._trans(_scale);
+        door._trans(_scale);
 
-        main1.scale(sx,sy,sz);
-        main2.scale(sx,sy,sz);
-        main3.scale(sx,sy,sz);
-        main4.scale(sx,sy,sz);
-        main5.scale(sx,sy,sz);
-        main6.scale(sx,sy,sz);
-        main7.scale(sx,sy,sz);
-        main8.scale(sx,sy,sz);
-        main10.scale(sx,sy,sz);
-        main11.scale(sx,sy,sz);
-        main12.scale(sx,sy,sz);
-        main13.scale(sx,sy,sz);
-        main14.scale(sx,sy,sz);
-        main15.scale(sx,sy,sz);
-        main16.scale(sx,sy,sz);
-        main17.scale(sx,sy,sz);
-        main18.scale(sx,sy,sz);
-        main19.scale(sx,sy,sz);
-        main20.scale(sx,sy,sz);
-        main21.scale(sx,sy,sz);
+        main1._trans(_scale);
+        main2._trans(_scale);
+        main3._trans(_scale);
+        main4._trans(_scale);
+        main5._trans(_scale);
+        main6._trans(_scale);
+        main7._trans(_scale);
+        main8._trans(_scale);
+        main10._trans(_scale);
+        main11._trans(_scale);
+        main12._trans(_scale);
+        main13._trans(_scale);
+        main14._trans(_scale);
+        main15._trans(_scale);
+        main16._trans(_scale);
+        main17._trans(_scale);
+        main18._trans(_scale);
+        main19._trans(_scale);
+        main20._trans(_scale);
+        main21._trans(_scale);
 
-        top.scale(sx,sy,sz);
-        f.scale(sx,sy,sz);
+        top._trans(_scale);
+        f._trans(_scale);
 
-        golo1.scale(sx,sy,sz);
-        golo2.scale(sx,sy,sz);
-        golo3.scale(sx,sy,sz);
-        golo4.scale(sx,sy,sz);
-        semi.scale(sx,sy,sz);
+        golo1._trans(_scale);
+        golo2._trans(_scale);
+        golo3._trans(_scale);
+        golo4._trans(_scale);
+        semi._trans(_scale);
+
+        thisss._trans(_scale);
+        thissss._trans(_scale);
+        thisssss._trans(_scale);
+
+
+        yo._trans(_scale);
+        yo1._trans(_scale);
+        yo2._trans(_scale);
+
+
+        this1._trans(_scale);
+        this2._trans(_scale);
+        this3._trans(_scale);
+
+        this11._trans(_scale);
+        this22._trans(_scale);
+        this33._trans(_scale);
 
     }
 
     if(thetaX!=0)
     {
-        base.rotateX(thetaX);
-        side1.rotateX(thetaX);
-        side2.rotateX(thetaX);
-        side3.rotateX(thetaX);
-        side4.rotateX(thetaX);
-        main.rotateX(thetaX);
-        door.rotateX(thetaX);
-        main.rotateX(thetaX);
+    Matrix xRot = rotX(thetaX);
 
-        main1.rotateX(thetaX);
-        main2.rotateX(thetaX);
-        main3.rotateX(thetaX);
-        main4.rotateX(thetaX);
-        main5.rotateX(thetaX);
-        main6.rotateX(thetaX);
-        main7.rotateX(thetaX);
-        main8.rotateX(thetaX);
-        main10.rotateX(thetaX);
-        main11.rotateX(thetaX);
-        main12.rotateX(thetaX);
-        main13.rotateX(thetaX);
-        main14.rotateX(thetaX);
-        main15.rotateX(thetaX);
-        main16.rotateX(thetaX);
-        main17.rotateX(thetaX);
-        main18.rotateX(thetaX);
-        main19.rotateX(thetaX);
-        main20.rotateX(thetaX);
-        main21.rotateX(thetaX);
+        base._trans(xRot);
+        side1._trans(xRot);
+        side2._trans(xRot);
+        side3._trans(xRot);
+        side4._trans(xRot);
+        main._trans(xRot);
+        door._trans(xRot);
+      //  main._trans(xRot);
 
-        top.rotateX(thetaX);
-        f.rotateX(thetaX);
+        main1._trans(xRot);
+        main2._trans(xRot);
+        main3._trans(xRot);
+        main4._trans(xRot);
+        main5._trans(xRot);
+        main6._trans(xRot);
+        main7._trans(xRot);
+        main8._trans(xRot);
+        main10._trans(xRot);
+        main11._trans(xRot);
+        main12._trans(xRot);
+        main13._trans(xRot);
+        main14._trans(xRot);
+        main15._trans(xRot);
+        main16._trans(xRot);
+        main17._trans(xRot);
+        main18._trans(xRot);
+        main19._trans(xRot);
+        main20._trans(xRot);
+        main21._trans(xRot);
 
-        golo1.rotateX(thetaX);
-        golo2.rotateX(thetaX);
-        golo3.rotateX(thetaX);
-        golo4.rotateX(thetaX);
-        semi.rotateX(thetaX);
+        top._trans(xRot);
+        f._trans(xRot);
+
+        golo1._trans(xRot);
+        golo2._trans(xRot);
+        golo3._trans(xRot);
+        golo4._trans(xRot);
+        semi._trans(xRot);
+
+        thisss._trans(xRot);
+        thissss._trans(xRot);
+        thisssss._trans(xRot);
+
+
+        yo._trans(xRot);
+        yo1._trans(xRot);
+        yo2._trans(xRot);
+
+
+        this1._trans(xRot);
+        this2._trans(xRot);
+        this3._trans(xRot);
+
+        this11._trans(xRot);
+        this22._trans(xRot);
+        this33._trans(xRot);
 
     }
 
     if(thetaY!=0)
     {
-        base.rotateY(thetaY);
-        side1.rotateY(thetaY);
-        side2.rotateY(thetaY);
-        side3.rotateY(thetaY);
-        side4.rotateY(thetaY);
-        main.rotateY(thetaY);
-        door.rotateY(thetaY);
-        main.rotateY(thetaY);
 
-        main1.rotateY(thetaY);
-        main2.rotateY(thetaY);
-        main3.rotateY(thetaY);
-        main4.rotateY(thetaY);
-        main5.rotateY(thetaY);
-        main6.rotateY(thetaY);
-        main7.rotateY(thetaY);
-        main8.rotateY(thetaY);
-        main10.rotateY(thetaY);
-        main11.rotateY(thetaY);
-        main12.rotateY(thetaY);
-        main13.rotateY(thetaY);
-        main14.rotateY(thetaY);
-        main15.rotateY(thetaY);
-        main16.rotateY(thetaY);
-        main17.rotateY(thetaY);
-        main18.rotateY(thetaY);
-        main19.rotateY(thetaY);
-        main20.rotateY(thetaY);
-        main21.rotateY(thetaY);
+    Matrix yRot = rotY(thetaY);
 
-        top.rotateY(thetaY);
-        f.rotateY(thetaY);
+        base._trans(yRot);
+        side1._trans(yRot);
+        side2._trans(yRot);
+        side3._trans(yRot);
+        side4._trans(yRot);
+        main._trans(yRot);
+        door._trans(yRot);
+       // main._trans(yRot);
 
-        golo1.rotateY(thetaY);
-        golo2.rotateY(thetaY);
-        golo3.rotateY(thetaY);
-        golo4.rotateY(thetaY);
-        semi.rotateY(thetaY);
+        main1._trans(yRot);
+        main2._trans(yRot);
+        main3._trans(yRot);
+        main4._trans(yRot);
+        main5._trans(yRot);
+        main6._trans(yRot);
+        main7._trans(yRot);
+        main8._trans(yRot);
+        main10._trans(yRot);
+        main11._trans(yRot);
+        main12._trans(yRot);
+        main13._trans(yRot);
+        main14._trans(yRot);
+        main15._trans(yRot);
+        main16._trans(yRot);
+        main17._trans(yRot);
+        main18._trans(yRot);
+        main19._trans(yRot);
+        main20._trans(yRot);
+        main21._trans(yRot);
+
+        top._trans(yRot);
+        f._trans(yRot);
+
+        golo1._trans(yRot);
+        golo2._trans(yRot);
+        golo3._trans(yRot);
+        golo4._trans(yRot);
+        semi._trans(yRot);
+
+        thisss._trans(yRot);
+        thissss._trans(yRot);
+        thisssss._trans(yRot);
+
+
+        yo._trans(yRot);
+        yo1._trans(yRot);
+        yo2._trans(yRot);
+
+
+        this1._trans(yRot);
+        this2._trans(yRot);
+        this3._trans(yRot);
+
+        this11._trans(yRot);
+        this22._trans(yRot);
+        this33._trans(yRot);
 
     }
+// Rendering
+    door.Draw(w2v, projection);
+    main1.Draw(w2v, projection);
+    main2.Draw(w2v, projection);
+    main3.Draw(w2v, projection);
+    main4.Draw(w2v, projection);
+    main5.Draw(w2v, projection);
+    main6.Draw(w2v, projection);
+    main7.Draw(w2v, projection);
+    main8.Draw(w2v, projection);
+    main10.Draw(w2v, projection);
+    main11.Draw(w2v, projection);
+    main12.Draw(w2v, projection);
+    main13.Draw(w2v, projection);
+    main14.Draw(w2v, projection);
+    main15.Draw(w2v, projection);
+    main16.Draw(w2v, projection);
+    main17.Draw(w2v, projection);
+    main18.Draw(w2v, projection);
+    main19.Draw(w2v, projection);
+    main20.Draw(w2v, projection);
+    main21.Draw(w2v, projection);
 
-    door.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main5.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main6.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main7.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main8.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main10.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main11.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main12.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main13.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main14.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main15.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main16.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main17.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main18.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main19.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main20.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main21.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    top.Draw(w2v, projection);
 
-    top.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    base.Draw(w2v, projection);
+    side1.Draw(w2v, projection);
+    side2.Draw(w2v, projection);
+    side3.Draw(w2v, projection);
+    side4.Draw(w2v, projection);
+    main.Draw(w2v, projection);
+    f.Draw(w2v, projection);
+//
+    golo1.Draw(w2v, projection);
+    golo2.Draw(w2v, projection);
+    golo3.Draw(w2v, projection);
+    golo4.Draw(w2v, projection);
 
-    base.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    side1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    side2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    side3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    side4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    main.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    f.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    semi.Draw(w2v, projection);
 
-    golo1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    golo2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    golo3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    golo4.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    thisss.Draw(w2v, projection);
+    thissss.Draw(w2v, projection);
+    thisssss.Draw(w2v, projection);
 
-    semi.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    yo.Draw(w2v, projection);
+    yo1.Draw(w2v, projection);
+    yo2.Draw(w2v, projection);
 
-    thisss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    thissss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    thisssss.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this1.Draw(w2v, projection);
+    this2.Draw(w2v, projection);
+    this3.Draw(w2v, projection);
 
-    yo.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    yo1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    yo2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    this11.Draw(w2v, projection);
+    this22.Draw(w2v, projection);
+    this33.Draw(w2v, projection);
 
-    this1.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    this2.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    this3.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-
-    this11.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    this22.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
-    this33.Draw(Camera,LookTo,0.01f,1000.0f,g_width,g_height);
+    light.Draw(w2v,projection);
 }
 
 int main()
 {
+    //SDL ko kura haru
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    SDL_Window *win = SDL_CreateWindow("Hawamaa Mahal", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window *win = SDL_CreateWindow("Hawamaa Mahal", 100, 100, 1366, 768, SDL_WINDOW_SHOWN);
     SDL_Surface *screen = SDL_GetWindowSurface(win);
-    Vector Camera(30,50,-100);
     g_framebuffer = (unsigned int*)screen->pixels;
+    // screen hieight and width for future use
     g_width = screen->w;
     g_height = screen->h;
+//camera and lookto vectors
+    Vector Camera(0,50,-100);
+    Vector LookTo(20,0,80);
+
+//Event handling
     SDL_Event e;
     bool quit = false;
     while (!quit)
@@ -320,26 +390,41 @@ int main()
                     case SDLK_DOWN:
                         Camera.z--;
                         break;
-                    case SDLK_z:
-                        sx+=5; sy+=5; sz+=5;
+                    case SDLK_RIGHT:
+                        RotateY(Camera,2);
+                        break;
+                    case SDLK_LEFT:
+                        RotateY(Camera,-2);
+                        break;
+                    case SDLK_i:
+                        sx+=0.2; sy+=0.2; sz+=0.2;  //scale ++
+                        break;
+                    case SDLK_o:
+                        sx-=0.2; sy-=0.2; sz-=0.2;  //scale --
+                        if (sx<=0.2)
+                        {
+                            sx=0.2; sy=0.2; sz=0.2;
+                        }
                         break;
                     case SDLK_x:
-                        thetaX+=5;
+                        thetaX+=5;  //xrotation ++
                         break;
                     case SDLK_y:
-                        thetaY+=5;
+                        thetaY+=5;     //yrotation ++
                         break;
 
                 }
             }
         }
+        // matrices to be used for world to pixel transformation, defined in transformation.cpp
+    Matrix w2v = Cam(Camera,LookTo);
+    Matrix projection = proj(0.01f,1000.0f,g_width,g_height);
 
-        Clear();
-        //zBufferRst();
+        Clear();        //zBuffer reset and clear screen, defined at the end of Draw.h
+
         SDL_LockSurface(screen);
-
-        Render(Camera);
-        //DrawTriangle(a,b,c);
+// Rendering function, defined mathi
+        Render(w2v,projection);
 
         SDL_UnlockSurface(screen);
 
