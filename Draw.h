@@ -46,10 +46,10 @@ class Vertex{
 
 void PutPixel(Vertex v, unsigned char r, unsigned char g, unsigned char b)
 {
-    if (v.y > g_height || v.x > g_width || v.x<0 || v.y<0) return;
+    if (v.y > g_height || v.x > g_width || v.x < 0 || v.y < 0) return;
    // if (v.i ==0) return;      //Remove from comment
-    //v.y=140+v.y;
-    //v.x=250+v.x;
+//    v.y=140+v.y;
+//    v.x=250+v.x;
     // color plus intensity
     float red = (int)r *v.i ; float green= (int)g *v.i; float blue=(int)b *v.i;   //Remove from comment
    // std::cout<<red<<","<<green<<","<<blue<<endl;
@@ -178,6 +178,8 @@ class Triangle{
 
         //yo wala funtion matra use vachha
         Triangle(Vertex AA,Vertex BB,Vertex CC):v1(AA),v2(BB),v3(CC){}
+
+
 // interpolation function for interpolation of depth and intensity
         void Interpolate(Vertex* e1, Vertex* e2, int r,int g ,int b)
 		{

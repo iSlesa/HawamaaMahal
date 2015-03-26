@@ -11,17 +11,19 @@ using namespace std;
 //flags for transformation
 float thetaX=0,thetaY=0,thetaz=0,sx=1,sy=1,sz=1;
 
+
+
 void Render(const Matrix w2v,const Matrix projection)
 {
     // All rendering code goes here:
 
 // initializing all the parts of the "Hawamma Mahal"
-    cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
+cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
     cube side1(Vector(0,50,5),5,5,50,224,	255,	255);
     cube side2(Vector(0,50,50+50),5,5,50,224,	255,	255);
     cube side3(Vector(45+50,50,50+50),5,5,50,224,	255,	255);
     cube side4(Vector(45+50,50,5),5,5,50,224,	255,	255);
-    cube main(Vector(15,50,15),70,-40-30,50,255,	182, 193);
+    cube Main(Vector(15,50,15),70,-40-30,50,255,	182, 193);
     cube door(Vector(15+25,35,15),20,3,35,0,0,0);
 
     cube main1(Vector(15,55,85),5,5,5,255,	182, 193);
@@ -77,9 +79,9 @@ void Render(const Matrix w2v,const Matrix projection)
     sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
     sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
 
-    sphere light(Vector(150,100,-12),5,255,255,255);
+    sphere light(Vector(150,100,-12),5,255,0,0);
 //
-    sphere semi(Vector(50,75,50),20,139,0,139);
+    hemisphere semi(Vector(50,75,50),20,139,0,139);
 //
 ////
     clouds thisss(Vector(-5,0,-5),255,255,255);
@@ -100,6 +102,7 @@ void Render(const Matrix w2v,const Matrix projection)
     clouds this22(Vector(-5-12,0,125),255,255,255);
     clouds this33(Vector(-5-9,0,110),255,255,255);
 
+
     if(sx>0)
     {
     Matrix _scale = scal(sx,sy,sz);
@@ -108,7 +111,7 @@ void Render(const Matrix w2v,const Matrix projection)
         side2._trans(_scale);
         side3._trans(_scale);
         side4._trans(_scale);
-        main._trans(_scale);
+        Main._trans(_scale);
         door._trans(_scale);
 
         main1._trans(_scale);
@@ -170,7 +173,7 @@ void Render(const Matrix w2v,const Matrix projection)
         side2._trans(xRot);
         side3._trans(xRot);
         side4._trans(xRot);
-        main._trans(xRot);
+        Main._trans(xRot);
         door._trans(xRot);
       //  main._trans(xRot);
 
@@ -234,7 +237,7 @@ void Render(const Matrix w2v,const Matrix projection)
         side2._trans(yRot);
         side3._trans(yRot);
         side4._trans(yRot);
-        main._trans(yRot);
+        Main._trans(yRot);
         door._trans(yRot);
        // main._trans(yRot);
 
@@ -317,7 +320,7 @@ void Render(const Matrix w2v,const Matrix projection)
     side2.Draw(w2v, projection);
     side3.Draw(w2v, projection);
     side4.Draw(w2v, projection);
-    main.Draw(w2v, projection);
+    Main.Draw(w2v, projection);
     f.Draw(w2v, projection);
 //
     golo1.Draw(w2v, projection);
@@ -358,7 +361,8 @@ int main()
     g_width = screen->w;
     g_height = screen->h;
 //camera and lookto vectors
-    Vector Camera(0,50,-100);
+    Vector Camera(20,50,-100);
+    cam = Camera;
     Vector LookTo(20,0,80);
 
 //Event handling

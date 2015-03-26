@@ -12,12 +12,19 @@ class Vector{
     float i;
     public:
     Vector(){}
-    Vector(float xx,float yy, float zz):x(xx),y(yy),z(zz){}
+    Vector(float xx,float yy, float zz):x(xx),y(yy),z(zz){ i =1;}
     Vector(const Matrix& mat);
     Vector operator + (const Vector& vec) const {return Vector(x+vec.x,y+vec.y,z+vec.z);}
     Vector operator - (const Vector& vec) const {return Vector(x-vec.x,y-vec.y,z-vec.z);}
     Vector operator / (const float& d) const {return Vector(x/d,y/d,z/d);}
     Vector operator * (const float& d) const {return Vector(x*d,y*d,z*d);}
+//    Vector operator = (const Vector& in)
+//    {
+//        float a=in.x;
+//        float b=in.y;
+//        float c=in.z;
+//        return Vector(a,b,c);
+//    }
     void operator = (const Vector& in) {
                 x=in.x;
                 y=in.y;
