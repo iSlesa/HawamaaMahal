@@ -131,6 +131,39 @@ void RotateY(Vector& Point,float theta){
 
 }
 
+ fDrawTriangle(ver[0],ver[1],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[0],ver[3],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[4],ver[5],ver[6],r,g,b,w2c,projection);
+            fDrawTriangle(ver[4],ver[7],ver[6],r,g,b,w2c,projection);
+            fDrawTriangle(ver[5],ver[1],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[5],ver[6],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[4],ver[0],ver[3],r,g,b,w2c,projection);
+            fDrawTriangle(ver[4],ver[7],ver[3],r,g,b,w2c,projection);
+            fDrawTriangle(ver[7],ver[6],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[7],ver[3],ver[2],r,g,b,w2c,projection);
+            fDrawTriangle(ver[5],ver[0],ver[4],r,g,b,w2c,projection);
+            fDrawTriangle(ver[5],ver[0],ver[1],r,g,b,w2c,projection);
+        }
+
+        void fDrawTriangle(Vector v1, Vector v2, Vector v3, int r,int g, int b,const Matrix w2c, const Matrix projection)
+        {
+            Vector normal;
+            normal = (v2-v3).crossProduct(v1-v3);
+            normal.normalize();
+            Vector centroid = ((v2 +v3)+v1)/3;
+            Vector l = L - centroid;
+            l.normalize();
+            float in = (1+1*normal.dotProduct(l))/2;
+            Vertex v11 = WorldToPixel(v1,w2c,projection);
+            Vertex v22 = WorldToPixel(v2,w2c,projection);
+            Vertex v33 = WorldToPixel(v3,w2c,projection);
+            v11.i=in;
+            v22.i=in;
+            v33.i=in;
+            Triangle T1(v11,v22,v33);
+            T1.DrawTriangle(r,g,b);
+        }
+
 
 void RotateZ(Vector& Point,float theta){
     Matrix T(4,4); //Transformation matrix

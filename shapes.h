@@ -5,7 +5,7 @@
 #include <vector>
 #define ABS(a) ((a<0)? a*-1 : a)
 
-Vector L(150,100,-12);
+Vector L(120,120,50);
 Vector cam;
 
 class shapes{
@@ -201,12 +201,12 @@ class cube: public shapes{
         void fDrawTriangle(Vector v1, Vector v2, Vector v3, int r,int g, int b,const Matrix w2c, const Matrix projection)
         {
             Vector normal;
-            normal = (v2-v3).crossProduct(v1-v3);
+            normal = ((v2-v3).crossProduct(v1-v3)) * -1.0f;
             normal.normalize();
             Vector centroid = ((v2 +v3)+v1)/3;
             Vector l = L - centroid;
             l.normalize();
-            float in = (1+1*normal.dotProduct(l))/2;
+            float in = (1+1*ABS(normal.dotProduct(l)))/2;
             Vertex v11 = WorldToPixel(v1,w2c,projection);
             Vertex v22 = WorldToPixel(v2,w2c,projection);
             Vertex v33 = WorldToPixel(v3,w2c,projection);
@@ -504,7 +504,7 @@ class Csphere: public shapes{
         {
             for(int j=0;j<rings*sectors;j++)
             {
-               ver[j].i = 0.95;
+               ver[j].i = 1;
 
             }
         }

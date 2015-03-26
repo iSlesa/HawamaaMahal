@@ -18,12 +18,12 @@ void Render(const Matrix w2v,const Matrix projection)
     // All rendering code goes here:
 
 // initializing all the parts of the "Hawamma Mahal"
-cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
+    cube base(Vector(0,0,100),100,100,5,205	,193,	197);
     cube side1(Vector(0,50,5),5,5,50,224,	255,	255);
     cube side2(Vector(0,50,50+50),5,5,50,224,	255,	255);
     cube side3(Vector(45+50,50,50+50),5,5,50,224,	255,	255);
     cube side4(Vector(45+50,50,5),5,5,50,224,	255,	255);
-    cube Main(Vector(15,50,15),70,-40-30,50,255,	182, 193);
+    cube Main(Vector(15,50,85),70,70,50,255,	182, 193);
     cube door(Vector(15+25,35,15),20,3,35,0,0,0);
 
     cube main1(Vector(15,55,85),5,5,5,255,	182, 193);
@@ -67,7 +67,7 @@ cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
     cube main21(Vector(15,55,35),5,5,5,255,	182, 193);
 
 
-    cube top(Vector(30,75,30),40,-40,25,255,	0, 193);
+    cube top(Vector(30,75,70),40,40,25,255,	0, 193);
 
   //  pyramid top(Vector(25+25,70,25+25),30,40,238	,162	,173);
     flag f(Vector(25+25,95,25+25),Vector(25+25,120,25+25),Vector(25+25,105,25+25),Vector(25+25,120,25+25),Vector(27.5+25+20,105,25+25),102	,139	,139);
@@ -79,7 +79,7 @@ cube base(Vector(0,0,0),100,-100,5,205	,193,	197);
     sphere golo3(Vector(97.5,57.5,97.5),5,139	,0,	139);
     sphere golo4(Vector(97.5,57.5,2.5),5,139	,0,	139);
 
-    sphere light(Vector(150,100,-12),5,255,0,0);
+    Csphere light(Vector(120,120,50),5,255,0,0);
 //
     hemisphere semi(Vector(50,75,50),20,139,0,139);
 //
